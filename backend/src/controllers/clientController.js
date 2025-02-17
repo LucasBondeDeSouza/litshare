@@ -2,9 +2,9 @@ import * as clientService from "../services/clientServices.js"
 
 export const createClient = async (req, res) => {
     try {
-        const clientData = req.body;
-        const newClient = await clientService.createClient(clientData);
-        res.status(201).json(newClient);
+        const { name, email, password } = req.body;
+        const user = await clientService.createClient(name, email, password);
+        res.status(201).json(user);
     } catch (err) {
         console.log('Error adding client:', err.message);
         
@@ -18,8 +18,8 @@ export const createClient = async (req, res) => {
 
 export const loginClient = async (req, res) => {
     try {
-        const clientData = req.body;
-        const user = await clientService.loginClient(clientData);
+        const { email, password } = req.body;
+        const user = await clientService.loginClient(email, password);
         res.status(200).json({ message: "Login realizado com sucesso", user });
     } catch (err) {
         console.log("Error during login:", err.message);

@@ -3,8 +3,7 @@ import bcrypt from "bcrypt"
 
 const saltRounds = 10;
 
-export const createClient = async (clientData) => {
-    const { name, email, password } = clientData
+export const createClient = async (name, email, password) => {
 
     // Verifica se o e-mail já existe no banco de dados
     const existingUser = await query(
