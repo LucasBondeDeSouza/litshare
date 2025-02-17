@@ -17,8 +17,6 @@ const db = new Pool({
     connectionString: process.env.POSTGRES_URL,
 })
 
-db.connect()
-
 db.on('error', (err) => {
     console.error('Unexpected error on idle client', err)
     process.exit(-1)
