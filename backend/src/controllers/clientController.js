@@ -29,3 +29,30 @@ export const loginClient = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
+export const getClient = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await clientService.getClient(id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json(user);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+export const searchClients = async (req, res) => {
+    try {
+        const search = req.query.q;
+        console.log("Search term:", search);  // <--- Aqui!
+        const clients = await clientService.searchClients(search);
+        console.log("Search results:", clients);  // <--- Aqui!
+        res.status(200).json(clients);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}

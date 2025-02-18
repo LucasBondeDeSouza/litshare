@@ -50,3 +50,19 @@ export const loginClient = async (email, password) => {
 
     return user;
 };
+
+export const getClient = async (id) => {
+    const { rows } = await query(
+        `SELECT * FROM users WHERE id = $1`,
+        [id]
+    )
+    return rows[0];
+}
+
+export const searchClients = async (search) => {
+    const { rows } = await query(
+        `SELECT users.id, users.username, books.title FROM users LEFT JOIN books ON books.user_id = users.id WHERE users.username ILIKE $1 OR books.title ILIKE $1`,
+        [`%${search}%`]
+    )
+    return rows;
+}
