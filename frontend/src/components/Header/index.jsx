@@ -3,21 +3,24 @@ import axios from 'axios';
 
 import { Container, NavDropdown, Form, Button, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBook, faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export default ({ data }) => {
     const [search, setSearch] = useState('')
     const [results, setResults] = useState([]);
 
-    const handleSearch = async (e) => {
-        e.preventDefault()
+    const handleSearch = async (query) => {
+        if (!query.trim()) {
+            setResults([]);
+            return;
+        }
         try {
-            const response = await axios.get(`http://localhost:3000/api/clients/search?q=${search}`)
+            const response = await axios.get(`http://localhost:3000/api/clients/search?q=${query}`);
             setResults(response.data);
         } catch (err) {
             console.error("Error search client:", err);
         }
-    }
+    }    
 
     return (
         <div className="py-2 py-lg-3 mb-3 border-bottom bg-white sticky-top">
@@ -45,7 +48,10 @@ export default ({ data }) => {
                                 aria-label="Search"
                                 aria-describedby="button-addon2"
                                 value={search}
-                                onChange={(e) => setSearch(e.target.value)}
+                                onChange={(e) => {
+                                    setSearch(e.target.value);
+                                    handleSearch(e.target.value);
+                                }}
                             />
                         </div>
                     </Form>

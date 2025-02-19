@@ -47,9 +47,7 @@ export const getClient = async (req, res) => {
 export const searchClients = async (req, res) => {
     try {
         const search = req.query.q;
-        console.log("Search term:", search);  // <--- Aqui!
         const clients = await clientService.searchClients(search);
-        console.log("Search results:", clients);  // <--- Aqui!
         res.status(200).json(clients);
     } catch (err) {
         console.error(err);

@@ -60,9 +60,15 @@ export const getClient = async (id) => {
 }
 
 export const searchClients = async (search) => {
-    const { rows } = await query(
-        `SELECT users.id, users.username, books.title FROM users LEFT JOIN books ON books.user_id = users.id WHERE users.username ILIKE $1 OR books.title ILIKE $1`,
+    const usersQuery = await query(
+        `SELECT username FROM users WHERE username ILIKE $1`,
         [`%${search}%`]
     )
-    return rows;
+
+    const booksQuery = await query(
+        `SELECT title FROM books WHERE title ILIKE $1`,
+        [`%${search}%`]
+    )
+
+    return [...usersQuery.rows, ...booksQuery.rows];
 }
