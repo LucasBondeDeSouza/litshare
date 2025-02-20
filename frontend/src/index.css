@@ -1,0 +1,129 @@
+/* Header */
+.listgroup {
+    top: 100%;
+    z-index: 1000;
+    max-height: 325px;
+    overflow: auto;
+}
+
+.list-picture, .dropdown-picture {
+    border-radius: 50%;
+    height: 32px;
+}
+/* End Header */
+
+/* Cards */
+.cards-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 45px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+.flip-horizontal-left.flipped .flip-card-inner {
+    transform: rotateY(-180deg);
+}
+
+.flip-horizontal-left .flip-card-back {
+    transform: rotateY(-180deg);
+}
+
+.flip-card {
+    width: 300px;
+    height: 460px;
+    perspective: 1000px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+}
+
+.flip-card-front, 
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background-color: #fff;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /*align-items: start;*/
+}
+
+.card-picture-profile {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+}
+
+.card-picture-alternative {
+    font-size: 25px;
+}
+
+.flip-card-back > .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+}
+
+.flip-card-back > .card-body > .card-title > h2 {
+    font-size: 30px;
+}
+
+.flip-card-back > .card-body > .card-title > p {
+    font-weight: bold;
+    font-size: 12px;
+    color: darkcyan;
+}
+
+.flip-card-back > .card-body > .card-text > p {
+    text-indent: 20px;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.card-image img {
+    width: 100%;
+    height: auto; /* Preserva a proporção da altura */
+    /*object-fit: cover;*/
+}
+
+.card-image img, .card-body {
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+}
+
+@media (max-width: 1023px) {
+    .cards-group {
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .flip-card {
+        width: 320px;
+        height: 480px;
+    }
+
+    .flip-card-back > .card-body > .card-text > p {
+        font-size: 1.1rem;
+    }
+}
+/* End Cards */

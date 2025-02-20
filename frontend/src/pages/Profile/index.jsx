@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Header from "../../components/Header";
-import Timeline from "../Timeline";
 
 export default () => {
     const [data, setData] = useState({});
@@ -26,10 +24,11 @@ export default () => {
 
     return (
         <>
-            <Header data={data} />
             <div className="bg-light min-vh-100">
                 <div className="container">
-                    <Timeline />
+                    <h1>Username:</h1>
+                    <h2>{data.username || "Loading..."}</h2>
+                    <h2>{data.email || "Loading"}</h2>
                 </div>
             </div>
         </>
