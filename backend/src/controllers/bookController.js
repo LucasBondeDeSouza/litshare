@@ -10,3 +10,14 @@ export const getBooks = async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 };
+
+export const toggleLike = async (req, res) => {
+    try {
+        const { userId, bookId } = req.body; // Esperamos que o userId e bookId sejam enviados no corpo da requisição
+        const result = await bookService.toggleLike(userId, bookId);
+        res.status(200).json(result);
+    } catch (err) {
+        console.error("Error toggling like:", err);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};

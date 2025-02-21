@@ -24,25 +24,10 @@ export default () => {
         }
     };
 
-    const countStars = (rating) => {
-        let stars = [];
-
-        for (let i = 0; i < rating; i++) {
-            stars.push(<FontAwesomeIcon icon={faStarSolid} key={`solid-${i}`} />)
-        }
-
-        if (rating < 5) {
-            for (let i = rating; i < 5; i++) {
-                stars.push(<FontAwesomeIcon icon={faStarRegular} key={`regular-${i}`} />)
-            }
-        }
-        return stars
-    }
-
     return (
         <div className="pt-5">
             <h1 className="text-center">Timeline</h1>
-            <Cards data={data} />
+            <Cards data={data} userId={userId} />
         </div>
     )
 }

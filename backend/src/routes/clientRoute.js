@@ -11,5 +11,6 @@ router.get('/clients/home/:id', clientController.getClient);
 router.get('/clients/search', clientController.searchClients)
 
 router.get('/books/home/:id', bookController.getBooks)
+router.post('/books/like', bookController.toggleLike);
 
 export default router

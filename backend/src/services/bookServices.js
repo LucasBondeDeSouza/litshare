@@ -67,3 +67,26 @@ export const getBooks = async (id) => {
 
     return booksWithDetails;
 };
+
+export const toggleLike = async (userId, bookId) => {
+    try {
+        // Verificar se o usuário já deu like no livro
+        const { rows } = await query(
+            `SELECT * FROM likes WHERE user_id = $1 AND book_id = $2`,
+            [userId, bookId]
+        );
+
+        if (rows.length > 0) {
+            // Se já deu like, removemos
+            await query(`DELETE FROM likes WHERE user_id = $1 AND book_id = $2`, [userId, bookId]);
+            return { liked: false };
+        } else {
+            // Caso contrário, adicionamos o like
+            await query(`INSERT INTO likes (user_id, book_id) VALUES ($1, $2)`, [userId, bookId]);
+            return { liked: true };
+        }
+    } catch (error) {
+        console.error("Error toggling like:", error);
+        throw error;
+    }
+};
