@@ -1,28 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart as faHeartSolid, faStar as faStarSolid, faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { faHeart as faHeartRegular, faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
-
-import axios from "axios";
+import { faStar as faStarSolid, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
+import LikeButton from "../LikeButton"; // Importando o novo componente
 
 export default ({ data, userId }) => {
     const [flippedBooks, setFlippedBooks] = useState({});
 
-    const handleLikeToggle = async (bookId) => {
-        try {
-            await axios.post('http://localhost:3000/api/books/like', { userId, bookId });
-        } catch (error) {
-            console.error("Error toggling like:", error);
-        }
-    };
+    useEffect(() => {
+        // Inicializa o estado de flip dos livros
+        const initialFlips = {};
+        data.forEach(book => {
+            initialFlips[book.book_id] = false;
+        });
+        setFlippedBooks(initialFlips);
+    }, [data]);
 
     const ratingStars = (rating) => {
         let stars = [];
-
         for (let i = 0; i < rating; i++) {
             stars.push(<FontAwesomeIcon icon={faStarSolid} key={`solid-${i}`} />);
         }
-
         if (rating < 5) {
             for (let i = rating; i < 5; i++) {
                 stars.push(<FontAwesomeIcon icon={faStarRegular} key={`regular-${i}`} />);
@@ -31,7 +29,6 @@ export default ({ data, userId }) => {
         return stars;
     };
 
-    // Função para alternar o estado de flip do livro
     const toggleFlip = (bookId) => {
         setFlippedBooks((prevState) => ({
             ...prevState,
@@ -63,18 +60,13 @@ export default ({ data, userId }) => {
                                     </div>
 
                                     <div className="d-flex align-items-center justify-content-between">
-                                        <div className="d-flex align-items-center">
-                                            <FontAwesomeIcon
-                                                icon={book.liked_by_user ? faHeartSolid : faHeartRegular}
-                                                className="text-danger"
-                                                onClick={() => handleLikeToggle(book.book_id)}
-                                            />
-                                            <span className="text-danger px-2">
-                                                {book.like_count >= 1000 && book.like_count < 1000000
-                                                    ? (book.like_count / 1000).toFixed(1) + "k"
-                                                    : book.like_count}
-                                            </span>
-                                        </div>
+                                        {/* Componente LikeButton */}
+                                        <LikeButton 
+                                            bookId={book.book_id} 
+                                            userId={userId} 
+                                            initialLiked={book.liked_by_user} 
+                                            initialLikeCount={Number(book.like_count) || 0} 
+                                        />
 
                                         <div className="card-stars d-flex text-warning gap-1">
                                             {ratingStars(book.rating)}
