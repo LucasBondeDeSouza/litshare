@@ -26,7 +26,7 @@ export default ({ bookId, userId, initialLiked, initialLikeCount }) => {
         <div className="d-flex align-items-center">
             <FontAwesomeIcon
                 icon={liked ? faHeartSolid : faHeartRegular}
-                className="text-danger"
+                className="text-danger like-button"
                 onClick={handleLikeToggle}
             />
             <span className="text-danger px-2">

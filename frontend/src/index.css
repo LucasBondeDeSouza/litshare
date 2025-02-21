@@ -60,6 +60,10 @@
     /*align-items: start;*/
 }
 
+.like-button {
+    cursor: pointer;
+}
+
 .card-picture-profile {
     height: 25px;
     width: 25px;

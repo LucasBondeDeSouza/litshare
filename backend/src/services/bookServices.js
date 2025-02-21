@@ -19,14 +19,10 @@ async function fetchBookData(book) {
         // Obtendo o autor (primeiro da lista, se houver)
         const author = firstResult.author_name?.[0] || 'Author Not Found';
 
-        // Obtendo a categoria (não é garantida na Open Library)
-        const category = firstResult.subject?.[0] || 'Category Not Found';
-
         return {
             ...book,
             cover,
             author,
-            category,
         };
     } catch (error) {
         console.error(`Error fetching data for book ${book.title}:`, error);
@@ -34,7 +30,6 @@ async function fetchBookData(book) {
             ...book,
             cover: 'Error fetching cover',
             author: 'Error fetching author',
-            category: 'Error fetching category',
         };
     }
 }
