@@ -124,8 +124,15 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 45px 15px 5px;
+    padding: 10px 15px 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.skeleton-picture {
+    height: 30px;
+    width: 30px;
+    background-color: #ddd;
+    border-radius: 50%;
 }
 
 .skeleton-image {
@@ -134,7 +141,7 @@
     background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
     background-size: 200% 100%;
     animation: loading 1.5s infinite;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .skeleton-title {
@@ -144,7 +151,7 @@
     border-radius: 5px;
 }
 
-.skeleton-text {
+.skeleton-text, .skeleton-name {
     width: 100px;
     height: 15px;
     background: #ddd;
