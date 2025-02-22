@@ -5,6 +5,7 @@ import Cards from "../../components/Cards";
 
 export default () => {
     const [data, setData] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
     const userId = localStorage.getItem('userId');
 
     useEffect(() => {
@@ -17,17 +18,20 @@ export default () => {
 
     const getBooks = async () => {
         try {
+            setIsLoading(true);
             const response = await axios.get(`http://localhost:3000/api/books/home/${userId}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching user data:', err);
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
         <div className="pt-5">
             <h1 className="text-center">Timeline</h1>
-            <Cards data={data} userId={userId} />
+            <Cards data={data} userId={userId} isLoading={isLoading} />
         </div>
     )
 }

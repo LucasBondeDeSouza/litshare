@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import CardFront from "./CardFront";
 import CardBack from "./CardBack";
+import SkeletonCard from "./SkeletonCard";
 
-export default ({ data, userId }) => {
+export default ({ data, userId, isLoading }) => {
     const [flippedBooks, setFlippedBooks] = useState({});
 
     useEffect(() => {
@@ -22,7 +23,9 @@ export default ({ data, userId }) => {
 
     return (
         <div className="cards-group">
-            {data.length > 0 ? (
+            {isLoading ? (
+                Array.from({ length: 3 }).map((_, index) => <SkeletonCard key={index} />)
+            ) : data.length > 0 ? (
                 data.map(book => (
                     <div key={book.book_id} className={`flip-card flip-horizontal-left ${flippedBooks[book.book_id] ? "flipped" : ""}`}>
                         <div className="flip-card-inner">
