@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from 'axios';
 import { Container, NavDropdown, Form, Dropdown, ListGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBook, faSearch, faUser, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default ({ data }) => {
     const [search, setSearch] = useState('');
     const [results, setResults] = useState([]);
+    const searchRef = useRef(null);
 
     const handleSearch = async (query) => {
         if (!query.trim()) {
@@ -21,6 +22,19 @@ export default ({ data }) => {
         }
     };
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (searchRef.current && !searchRef.current.contains(event.target)) {
+                setResults([]); // Esconde a lista quando clica fora
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     return (
         <div className="py-2 border-bottom bg-white sticky-top">
             <Container>
@@ -30,12 +44,11 @@ export default ({ data }) => {
                         <h1 className="display-6 mb-0 d-none d-lg-inline">LitShare</h1>
                     </a>
 
-                    <Form onSubmit={handleSearch} className="col-10 col-lg-5 mb-lg-0 me-lg-3 position-relative">
+                    <Form ref={searchRef} className="col-10 col-lg-5 mb-lg-0 me-lg-3 position-relative">
                         <Form.Control
                             type="text"
                             placeholder="Search..."
                             aria-label="Search"
-                            aria-describedby="button-addon2"
                             value={search}
                             onChange={(e) => {
                                 setSearch(e.target.value);
@@ -44,9 +57,9 @@ export default ({ data }) => {
                         />
 
                         {results.length > 0 && (
-                            <ListGroup className="position-absolute w-100 listgroup">
+                            <div className="list-group position-absolute w-100">
                                 {results.map((user) => (
-                                    <ListGroup.Item key={user.id} className="d-flex justify-content-between align-items-center py-3">
+                                    <div key={user.id} className="list-group-line d-flex justify-content-between align-items-center p-2">
                                         {user.title ? (
                                             <span>{user.title}</span>
                                         ) : (
@@ -60,9 +73,9 @@ export default ({ data }) => {
                                                 <span>{user.username}</span>
                                             </div>
                                         )}
-                                    </ListGroup.Item>
+                                    </div>
                                 ))}
-                            </ListGroup>
+                            </div>
                         )}
                     </Form>
 

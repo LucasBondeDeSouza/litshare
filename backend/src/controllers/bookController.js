@@ -24,9 +24,12 @@ export const toggleLike = async (req, res) => {
 
 export const getLikers = async (req, res) => {
     try {
-        const { userId, bookId } = req.params;
+        const { bookId } = req.params;
+        const { userId } = req.query;
+        if (!userId) {
+            return res.status(400).json({ error: "User ID is required" });
+        }
         const likers = await bookService.getLikers(userId, bookId);
-        console.log(likers)
         res.status(200).json(likers);
     } catch (err) {
         console.error("Error retrieving likers:", err);

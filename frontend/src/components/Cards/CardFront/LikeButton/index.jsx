@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
-import ModalForm from "../../../ModalForm";
+import ModalForm from "../../../LikersModal";
 
 export default ({ bookId, userId, initialLiked, initialLikeCount }) => {
     const [liked, setLiked] = useState(initialLiked);
@@ -27,13 +27,13 @@ export default ({ bookId, userId, initialLiked, initialLikeCount }) => {
 
     const handleShowLikers = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/books/${bookId}/likers`);
+            const response = await axios.get(`http://localhost:3000/api/books/${bookId}/likers?userId=${userId}`);
             setLikers(response.data);
             setShowModal(true);
         } catch (error) {
             console.error("Error fetching likers:", error);
         }
-    };
+    };    
 
     return (
         <div className="d-flex align-items-center like-button">

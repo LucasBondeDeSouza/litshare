@@ -16,7 +16,7 @@ export default ({ show, onHide, likers, userId }) => {
                 {likers.length > 0 ? (
                     <div className="d-flex flex-column">
                         {likers.map((liker) => (
-                            <div key={liker.id} className="d-flex align-items-center justify-content-between p-2">
+                            <div key={liker.id} className="d-flex align-items-center justify-content-between p-2 modal-line">
                                 <div className="d-flex align-items-center gap-3">
                                     {liker.picture ? (
                                         <img src={liker.picture} alt="Profile Picture" className="dropdown-picture" />
@@ -26,11 +26,16 @@ export default ({ show, onHide, likers, userId }) => {
                                     <span>{liker.username}</span>
                                 </div>
 
-                                <Button size="sm" variant="primary">
-                                    Seguir
-                                </Button>
+                                {liker.id != userId && (
+                                    <Button 
+                                        size="sm" 
+                                        variant={liker.isfollowing ? "outline-primary" : "primary"} 
+                                        disabled={liker.isfollowing} 
+                                    >
+                                        {liker.isfollowing ? "Following" : "Follow"}
+                                    </Button>
+                                )}
                             </div>
-
                         ))}
                     </div>
                 ) : (
