@@ -2,8 +2,8 @@ import * as clientService from "../services/clientServices.js"
 
 export const createClient = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
-        const user = await clientService.createClient(name, email, password);
+        const { name, social_handle, email, password } = req.body;
+        const user = await clientService.createClient(name, social_handle, email, password);
         res.status(201).json(user);
     } catch (err) {
         console.log('Error adding client:', err.message);

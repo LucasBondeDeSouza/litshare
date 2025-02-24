@@ -1,21 +1,29 @@
 import React, { useState } from "react";
 import axios from "axios";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
 
 export default () => {
     const [name, setName] = useState("");
+    const [social_handle, setSocialHandle] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         try {
-            const clientData = { name, email, password };
+            const clientData = {
+                name,
+                social_handle: `@${social_handle}`,
+                email,
+                password
+            }
+
             await axios.post("http://localhost:3000/api/clients/register", clientData);
 
             setName("");
+            setSocialHandle("");
             setEmail("");
             setPassword("");
         } catch (err) {
@@ -53,6 +61,22 @@ export default () => {
                                             value={name}
                                             required
                                             onChange={(e) => setName(e.target.value)}
+                                        />
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">@</span>
+                                        <input
+                                            type="text"
+                                            className="form-control py-2"
+                                            placeholder=""
+                                            value={social_handle}
+                                            required
+                                            onChange={(e) => {
+                                                // Impedir espaços no social_handle
+                                                const newValue = e.target.value.replace(/\s/g, "");
+                                                setSocialHandle(newValue);
+                                            }}
                                         />
                                     </div>
 

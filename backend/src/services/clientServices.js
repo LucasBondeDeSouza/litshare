@@ -3,7 +3,7 @@ import bcrypt from "bcrypt"
 
 const saltRounds = 10;
 
-export const createClient = async (name, email, password) => {
+export const createClient = async (name, social_handle, email, password) => {
 
     // Verifica se o e-mail já existe no banco de dados
     const existingUser = await query(
@@ -20,9 +20,9 @@ export const createClient = async (name, email, password) => {
 
     // Se não existir, cadastra o novo usuário
     const { rows } = await query(
-        `INSERT INTO users (username, email, password)
-        VALUES ($1, $2, $3) RETURNING *`,
-        [name, email, hashedPassword]
+        `INSERT INTO users (username, social_handle, email, password)
+        VALUES ($1, $2, $3, $4) RETURNING *`,
+        [name, social_handle, email, hashedPassword]
     );
 
     return rows[0];
