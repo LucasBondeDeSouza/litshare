@@ -78,13 +78,3 @@ export const unfollowUser = async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 };
-
-export const checkFollowing = async (req, res) => {
-    try {
-        const { followerId, followedId } = req.query;
-        const isFollowing = await clientService.isFollowing(followerId, followedId);
-        res.status(200).json({ isFollowing });
-    } catch (err) {
-        res.status(500).json({ message: "Internal Server Error" });
-    }
-};

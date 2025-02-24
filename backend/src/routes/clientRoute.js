@@ -11,7 +11,6 @@ router.get('/clients/home/:id', clientController.getClient)
 router.get('/clients/search', clientController.searchClients)
 router.post('/clients/follow', clientController.followUser);
 router.post('/clients/unfollow', clientController.unfollowUser);
-router.get('/clients/check-following', clientController.checkFollowing);
 
 router.get('/books/home/:id', bookController.getBooks)
 router.post('/books/like', bookController.toggleLike)

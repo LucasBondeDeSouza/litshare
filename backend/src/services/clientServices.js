@@ -101,12 +101,3 @@ export const unfollowUser = async (followerId, followedId) => {
 
     return { message: "User unfollowed successfully" };
 };
-
-export const isFollowing = async (followerId, followedId) => {
-    const { rows } = await query(
-        `SELECT * FROM followers WHERE follower_id = $1 AND followed_id = $2`,
-        [followerId, followedId]
-    );
-
-    return rows.length > 0;
-};
