@@ -1,8 +1,10 @@
 import React from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+
+import FollowButton from "../FollowButton";
 
 export default ({ show, onHide, likers, userId }) => {
 
@@ -27,13 +29,11 @@ export default ({ show, onHide, likers, userId }) => {
                                 </div>
 
                                 {liker.id != userId && (
-                                    <Button 
-                                        size="sm" 
-                                        variant={liker.isfollowing ? "outline-primary" : "primary"} 
-                                        disabled={liker.isfollowing} 
-                                    >
-                                        {liker.isfollowing ? "Following" : "Follow"}
-                                    </Button>
+                                    <FollowButton
+                                        initialIsFollowing={liker.isfollowing}  // Confirma se o usuário está seguindo ou não
+                                        followedId={liker.id}
+                                        userId={userId}
+                                    />
                                 )}
                             </div>
                         ))}

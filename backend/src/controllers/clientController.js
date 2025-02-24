@@ -54,3 +54,37 @@ export const searchClients = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 }
+
+export const followUser = async (req, res) => {
+    try {
+        const { followerId, followedId } = req.body;
+        if (followerId === followedId) {
+            return res.status(400).json({ message: "You cannot follow yourself" });
+        }
+
+        const response = await clientService.followUser(followerId, followedId);
+        res.status(200).json(response);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+};
+
+export const unfollowUser = async (req, res) => {
+    try {
+        const { followerId, followedId } = req.body;
+        const response = await clientService.unfollowUser(followerId, followedId);
+        res.status(200).json(response);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+};
+
+export const checkFollowing = async (req, res) => {
+    try {
+        const { followerId, followedId } = req.query;
+        const isFollowing = await clientService.isFollowing(followerId, followedId);
+        res.status(200).json({ isFollowing });
+    } catch (err) {
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};

@@ -72,3 +72,41 @@ export const searchClients = async (search) => {
 
     return [...usersQuery.rows, ...booksQuery.rows];
 }
+
+export const followUser = async (followerId, followedId) => {
+    // Verifica se o relacionamento já existe
+    const existingFollow = await query(
+        `SELECT * FROM followers WHERE follower_id = $1 AND followed_id = $2`,
+        [followerId, followedId]
+    );
+
+    if (existingFollow.rows.length > 0) {
+        throw new Error("You are already following this user");
+    }
+
+    // Insere o novo relacionamento
+    await query(
+        `INSERT INTO followers (follower_id, followed_id) VALUES ($1, $2)`,
+        [followerId, followedId]
+    );
+
+    return { message: "User followed successfully" };
+};
+
+export const unfollowUser = async (followerId, followedId) => {
+    await query(
+        `DELETE FROM followers WHERE follower_id = $1 AND followed_id = $2`,
+        [followerId, followedId]
+    );
+
+    return { message: "User unfollowed successfully" };
+};
+
+export const isFollowing = async (followerId, followedId) => {
+    const { rows } = await query(
+        `SELECT * FROM followers WHERE follower_id = $1 AND followed_id = $2`,
+        [followerId, followedId]
+    );
+
+    return rows.length > 0;
+};
