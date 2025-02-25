@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 
-export default function BookModal({ onClose, userId }) {
+export default ({ onClose, userId }) => {
     const [title, setTitle] = useState('');
     const [review, setReview] = useState('');
     const [rating, setRating] = useState(0);
@@ -79,8 +79,8 @@ export default function BookModal({ onClose, userId }) {
                     <Form.Group className="mb-3" style={{ position: "relative" }}>
                         <Form.Label>Title</Form.Label>
                         <Form.Control type="text" placeholder="Enter book title" value={title} required onChange={(e) => setTitle(e.target.value)} />
-                        
-                        {books.length > 0 && (
+
+                        {title.length > 0 && books.length > 0 && (
                             <ListGroup ref={listRef} className="position-absolute w-100">
                                 {books.map((book, index) => (
                                     <ListGroup.Item key={index} action onClick={() => handleBookClick(book.title)} className="list-group-line d-flex align-items-center p-2 gap-3" >
@@ -95,6 +95,7 @@ export default function BookModal({ onClose, userId }) {
                                 ))}
                             </ListGroup>
                         )}
+
                     </Form.Group>
 
                     <Form.Group className="mb-3">
