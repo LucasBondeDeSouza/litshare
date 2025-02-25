@@ -8,6 +8,13 @@
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
+.list-group-line img {
+    width: 40px; 
+    height: 60px; 
+    object-fit: cover; 
+    border-radius: 5px
+}
+
 /* Estiliza a barra de rolagem no Webkit (Chrome, Edge, Safari) */
 .list-group::-webkit-scrollbar {
     width: 8px; /* Largura da barra vertical */

@@ -1,5 +1,21 @@
 import * as bookService from "../services/bookServices.js"
 
+export const addBooks = async (req, res) => {
+    try {
+        const { title, review, rating, userId } = req.body;
+        const book = await bookService.addBook(title, review, rating, userId);
+        res.status(201).json(book);
+    } catch (err) {
+        console.log('Error adding book:', err.message);
+        
+        if (err.message === "book already exists") {
+            return res.status(409).json({ message: "Livro já cadastrado" });
+        }
+
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
 export const getBooks = async (req, res) => {
     try {
         const { id } = req.params;

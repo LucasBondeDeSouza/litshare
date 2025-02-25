@@ -34,6 +34,27 @@ async function fetchBookData(book) {
     }
 }
 
+export const addBook = async (title, review, rating, userId) => {
+    // Verifica se o livro já existe para o usuário
+    const existingBook = await query(
+        `SELECT * FROM books WHERE title = $1 AND user_id = $2`,
+        [title, userId]
+    );
+
+    if (existingBook.rows.length > 0) {
+        throw new Error("Este livro já foi cadastrado por você.");
+    }
+
+    // Insere o novo livro se não existir
+    const { rows } = await query(
+        `INSERT INTO books (title, review, rating, user_id)
+        VALUES ($1, $2, $3, $4) RETURNING *`,
+        [title, review, rating, userId]
+    );
+
+    return rows[0];
+};
+
 export const getBooks = async (id) => {
     const { rows } = await query(
         `SELECT u.id AS user_id, u.username, u.picture, b.id AS book_id, b.title, b.review, b.rating,

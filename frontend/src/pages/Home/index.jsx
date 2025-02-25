@@ -26,7 +26,7 @@ export default () => {
 
     return (
         <>
-            <Header data={data} />
+            <Header data={data} userId={userId} />
             <div className="bg-light min-vh-100">
                 <div className="container">
                     <Timeline />

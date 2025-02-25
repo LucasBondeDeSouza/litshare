@@ -3,10 +3,12 @@ import axios from 'axios';
 import { Container, NavDropdown, Form, Dropdown, ListGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import ModalForm from "../ModalForm";
 
-export default ({ data }) => {
+export default ({ data, userId }) => {
     const [search, setSearch] = useState('');
     const [results, setResults] = useState([]);
+    const [showModal, setShowModal] = useState(false);
     const searchRef = useRef(null);
 
     const handleSearch = async (query) => {
@@ -89,7 +91,7 @@ export default ({ data }) => {
 
                             <NavDropdown className="fs-5" title={data?.username ? (data.username.length > 14 ? data.username.slice(0, 14) + "..." : data.username) : 'User'} menuVariant="light">
                                 <NavDropdown.Item href="">My Profile</NavDropdown.Item>
-                                <NavDropdown.Item href="">New Book</NavDropdown.Item>
+                                <NavDropdown.Item onClick={() => setShowModal(true)}>New Book</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="">Sign out</NavDropdown.Item>
                             </NavDropdown>
@@ -97,6 +99,8 @@ export default ({ data }) => {
                     </div>
                 </div>
             </Container>
+
+            {showModal && <ModalForm onClose={() => setShowModal(false)} userId={userId} />}
         </div>
     );
 }

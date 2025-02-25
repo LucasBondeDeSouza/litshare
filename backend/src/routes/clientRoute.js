@@ -12,6 +12,7 @@ router.get('/clients/search', clientController.searchClients)
 router.post('/clients/follow', clientController.followUser);
 router.post('/clients/unfollow', clientController.unfollowUser);
 
+router.post('/books/newBook', bookController.addBooks)
 router.get('/books/home/:id', bookController.getBooks)
 router.post('/books/like', bookController.toggleLike)
 router.get('/books/:bookId/likers', bookController.getLikers);
