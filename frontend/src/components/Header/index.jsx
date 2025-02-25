@@ -63,11 +63,14 @@ export default ({ data, userId }) => {
                                 {results.map((user) => (
                                     <div key={user.id} className="list-group-line d-flex justify-content-between align-items-center p-2">
                                         {user.title ? (
-                                            <span>{user.title}</span>
+                                            <div className="d-flex align-items-center gap-2">
+                                                <img src={user.cover} alt={user.title} />
+                                                <span>{user.title} by {user.author}</span>
+                                            </div>
                                         ) : (
                                             <div className="d-flex align-items-center gap-2">
                                                 {user.picture ? (
-                                                    <img src={user.picture} alt={user.username} className="list-picture" />
+                                                    <img src={user.picture} alt="" className="list-picture" />
                                                 ) : (
                                                     <FontAwesomeIcon icon={faUserCircle} size="2x" />
                                                 )}
@@ -79,6 +82,7 @@ export default ({ data, userId }) => {
                                 ))}
                             </div>
                         )}
+
                     </Form>
 
                     <div className="d-none d-lg-flex align-items-center">

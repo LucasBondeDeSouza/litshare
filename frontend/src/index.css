@@ -47,9 +47,10 @@
     background-color: #f0f0f0;
 }
 
-.list-picture, .dropdown-picture {
+img.list-picture, .dropdown-picture {
     border-radius: 50%;
     height: 32px;
+    width: 32px;
 }
 /* End Header */
 

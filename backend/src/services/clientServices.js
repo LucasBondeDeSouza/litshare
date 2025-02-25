@@ -1,4 +1,5 @@
 import { query } from "../config/db.js"
+import axios from "axios"
 import bcrypt from "bcrypt"
 
 const saltRounds = 10;
@@ -63,15 +64,22 @@ export const searchClients = async (search) => {
     const usersQuery = await query(
         `SELECT username, picture FROM users WHERE username ILIKE $1`,
         [`%${search}%`]
-    )
+    );
 
-    const booksQuery = await query(
-        `SELECT title FROM books WHERE title ILIKE $1`,
-        [`%${search}%`]
-    )
+    // Busca livros na API Open Library
+    const booksQuery = await axios.get(`https://openlibrary.org/search.json?q=${search}`);
 
-    return [...usersQuery.rows, ...booksQuery.rows];
-}
+    // Adiciona informações de livros à lista de resultados
+    const books = booksQuery.data.docs.map((book) => ({
+        title: book.title,
+        author: book.author_name ? book.author_name.join(", ") : "Autor desconhecido",
+        cover: book.cover_i
+            ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
+            : null,
+    }));
+
+    return [...usersQuery.rows, ...books]; // Combina usuários e livros
+};
 
 export const followUser = async (followerId, followedId) => {
     // Verifica se o relacionamento já existe
