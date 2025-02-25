@@ -58,7 +58,7 @@ export default ({ data, userId }) => {
                             }}
                         />
 
-                        {results.length > 0 && (
+                        {search.length > 0 && results.length > 0 && (
                             <div className="list-group position-absolute w-100">
                                 {results.map((user) => (
                                     <div key={user.id} className="list-group-line d-flex justify-content-between align-items-center p-2">
