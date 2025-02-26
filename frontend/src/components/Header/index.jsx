@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from 'axios';
-import { Container, NavDropdown, Form, Dropdown, ListGroup } from 'react-bootstrap';
+import { Container, NavDropdown, Form, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import ModalForm from "../ModalForm";
+import ListGroup from "../ListGroup";
 
 export default ({ data, userId }) => {
     const [search, setSearch] = useState('');
@@ -58,30 +59,7 @@ export default ({ data, userId }) => {
                             }}
                         />
 
-                        {search.length > 0 && results.length > 0 && (
-                            <div className="list-group position-absolute w-100">
-                                {results.map((user) => (
-                                    <div key={user.id} className="list-group-line d-flex justify-content-between align-items-center p-2">
-                                        {user.title ? (
-                                            <div className="d-flex align-items-center gap-2">
-                                                <img src={user.cover} alt={user.title} />
-                                                <span>{user.title} by {user.author}</span>
-                                            </div>
-                                        ) : (
-                                            <div className="d-flex align-items-center gap-2">
-                                                {user.picture ? (
-                                                    <img src={user.picture} alt="" className="list-picture" />
-                                                ) : (
-                                                    <FontAwesomeIcon icon={faUserCircle} size="2x" />
-                                                )}
-
-                                                <span>{user.username}</span>
-                                            </div>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                        )}
+                        <ListGroup input={search} datas={results} />
 
                     </Form>
 

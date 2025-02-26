@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Modal, Button, ListGroup, Form } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
+
+import ListGroup from "../ListGroup";
 
 export default ({ onClose, userId }) => {
     const [title, setTitle] = useState('');
@@ -11,6 +13,7 @@ export default ({ onClose, userId }) => {
     const [rating, setRating] = useState(0);
     const [books, setBooks] = useState([]);
     const listRef = useRef(null);
+    const modalRef = useRef(null); // Referência para o modal
 
     useEffect(() => {
         if (title) {
@@ -28,8 +31,11 @@ export default ({ onClose, userId }) => {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (listRef.current && !listRef.current.contains(event.target)) {
-                setBooks([]);
+            if (
+                modalRef.current && !modalRef.current.contains(event.target) && 
+                listRef.current && !listRef.current.contains(event.target)
+            ) {
+                setBooks([]); // Esconde a lista se clicar fora do modal e da lista
             }
         };
 
@@ -74,28 +80,15 @@ export default ({ onClose, userId }) => {
             <Modal.Header closeButton>
                 <Modal.Title>New Book</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body ref={modalRef}>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" style={{ position: "relative" }}>
                         <Form.Label>Title</Form.Label>
                         <Form.Control type="text" placeholder="Enter book title" value={title} required onChange={(e) => setTitle(e.target.value)} />
-
-                        {title.length > 0 && books.length > 0 && (
-                            <ListGroup ref={listRef} className="position-absolute w-100">
-                                {books.map((book, index) => (
-                                    <ListGroup.Item key={index} action onClick={() => handleBookClick(book.title)} className="list-group-line d-flex align-items-center p-2 gap-3" >
-                                        {book.cover_i && (
-                                            <img
-                                                src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`}
-                                                alt="book"
-                                            />
-                                        )}
-                                        {book.title} by {book.author_name ? book.author_name.join(", ") : "Unknown"}
-                                    </ListGroup.Item>
-                                ))}
-                            </ListGroup>
-                        )}
-
+                        
+                        <div ref={listRef}>
+                            <ListGroup input={title} datas={books} handleClick={handleBookClick} />
+                        </div>
                     </Form.Group>
 
                     <Form.Group className="mb-3">

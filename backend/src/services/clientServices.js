@@ -72,7 +72,7 @@ export const searchClients = async (search) => {
     // Adiciona informações de livros à lista de resultados
     const books = booksQuery.data.docs.map((book) => ({
         title: book.title,
-        author: book.author_name ? book.author_name.join(", ") : "Autor desconhecido",
+        author_name: book.author_name ? book.author_name.join(", ") : "Autor desconhecido",
         cover: book.cover_i
             ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
             : null,
