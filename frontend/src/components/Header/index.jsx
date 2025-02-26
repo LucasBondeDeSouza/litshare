@@ -6,11 +6,30 @@ import { faBook, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import ModalForm from "../ModalForm";
 import ListGroup from "../ListGroup";
 
-export default ({ data, userId }) => {
+export default () => {
     const [search, setSearch] = useState('');
     const [results, setResults] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [data, setData] = useState({});
     const searchRef = useRef(null);
+    const userId = localStorage.getItem('userId')
+
+    useEffect(() => {
+        if (userId) {
+            getUser();
+        } else {
+            console.error('No user ID found in localStorage');
+        }
+    }, []);
+    
+    const getUser = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3000/api/clients/home/${userId}`);
+            setData(response.data);
+        } catch (err) {
+            console.error('Error fetching user data:', err);
+        }
+    };
 
     const handleSearch = async (query) => {
         if (!query.trim()) {
@@ -38,6 +57,11 @@ export default ({ data, userId }) => {
         };
     }, []);
 
+    const handleClick = (social_handle, title) => {
+        console.log(social_handle)
+        console.log(title)
+    }
+
     return (
         <div className="py-2 border-bottom bg-white sticky-top">
             <Container>
@@ -59,7 +83,7 @@ export default ({ data, userId }) => {
                             }}
                         />
 
-                        <ListGroup input={search} datas={results} />
+                        <ListGroup input={search} datas={results} handleClick={handleClick} />
                     </Form>
 
                     <div className="d-none d-lg-flex align-items-center">

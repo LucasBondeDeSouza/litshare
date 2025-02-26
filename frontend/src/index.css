@@ -106,6 +106,10 @@ img.list-picture, .dropdown-picture {
     cursor: pointer;
 }
 
+a.card-profile p small {
+    color: #555;
+}
+
 .card-picture-profile {
     height: 25px;
     width: 25px;

@@ -57,7 +57,7 @@ export const addBook = async (title, review, rating, userId) => {
 
 export const getBooks = async (id) => {
     const { rows } = await query(
-        `SELECT u.id AS user_id, u.username, u.picture, b.id AS book_id, b.title, b.review, b.rating,
+        `SELECT u.id AS user_id, u.username, u.social_handle, u.picture, b.id AS book_id, b.title, b.review, b.rating,
             CASE WHEN l.user_id IS NOT NULL THEN TRUE ELSE FALSE END AS liked_by_user,
             COALESCE(likes_count.count, 0) AS like_count
         FROM (

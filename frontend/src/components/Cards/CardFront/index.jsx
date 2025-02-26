@@ -7,7 +7,7 @@ export default ({ book, userId, toggleFlip }) => {
 
     return (
         <div className="flip-card-front">
-            <UserProfile username={book.username} picture={book.picture} />
+            <UserProfile username={book.username} social_handle={book.social_handle} picture={book.picture} />
 
             <div className="card-image" onClick={() => toggleFlip(book.book_id)}>
                 <img src={book.cover} alt={book.title} />

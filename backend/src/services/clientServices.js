@@ -4,6 +4,39 @@ import bcrypt from "bcrypt"
 
 const saltRounds = 10;
 
+async function fetchBookData(book) {
+    try {
+        // Faz a busca pelo título do livro
+        const searchBook = await axios.get(`https://openlibrary.org/search.json?title=${encodeURIComponent(book.title)}`);
+        const firstResult = searchBook.data.docs[0];
+
+        if (!firstResult) {
+            throw new Error('Book not found');
+        }
+
+        // Construindo a URL da capa do livro (se houver)
+        const cover = firstResult.cover_i 
+            ? `https://covers.openlibrary.org/b/id/${firstResult.cover_i}-L.jpg` 
+            : 'Cover Not Found';
+
+        // Obtendo o autor (primeiro da lista, se houver)
+        const author = firstResult.author_name?.[0] || 'Author Not Found';
+
+        return {
+            ...book,
+            cover,
+            author,
+        };
+    } catch (error) {
+        console.error(`Error fetching data for book ${book.title}:`, error);
+        return {
+            ...book,
+            cover: 'Error fetching cover',
+            author: 'Error fetching author',
+        };
+    }
+}
+
 export const createClient = async (name, social_handle, email, password) => {
 
     // Verifica se o e-mail já existe no banco de dados
@@ -80,6 +113,39 @@ export const searchClients = async (search) => {
 
     return [...usersQuery.rows, ...books]; // Combina usuários e livros
 };
+
+export const getClientBySocialHandle = async (social_handle, userId) => {
+    const { rows } = await query(
+        `SELECT 
+                u.id AS user_id, 
+                u.username, 
+                u.social_handle, 
+                u.picture, 
+                b.id AS book_id, 
+                b.title, 
+                b.review, 
+                b.rating,
+                CASE 
+                    WHEN l.user_id IS NOT NULL THEN TRUE 
+                    ELSE FALSE 
+                END AS liked_by_user,
+                COALESCE(likes_count.count, 0) AS like_count
+            FROM books b
+            JOIN users u ON b.user_id = u.id
+            LEFT JOIN likes l ON b.id = l.book_id AND l.user_id = $2
+            LEFT JOIN (
+                SELECT book_id, COUNT(*) AS count
+                FROM likes
+                GROUP BY book_id
+            ) likes_count ON b.id = likes_count.book_id
+            WHERE u.social_handle = $1
+            ORDER BY b.id DESC`,
+        [social_handle, userId]
+    );
+    const booksWithDetails = await Promise.all(rows.map(fetchBookData));
+
+    return booksWithDetails;
+}
 
 export const followUser = async (followerId, followedId) => {
     // Verifica se o relacionamento já existe
