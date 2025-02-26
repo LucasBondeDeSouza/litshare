@@ -60,7 +60,6 @@ export default ({ data, userId }) => {
                         />
 
                         <ListGroup input={search} datas={results} />
-
                     </Form>
 
                     <div className="d-none d-lg-flex align-items-center">

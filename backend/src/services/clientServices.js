@@ -62,7 +62,7 @@ export const getClient = async (id) => {
 
 export const searchClients = async (search) => {
     const usersQuery = await query(
-        `SELECT username, picture FROM users WHERE username ILIKE $1`,
+        `SELECT username, social_handle, picture FROM users WHERE username ILIKE $1 OR social_handle ILIKE $1`,
         [`%${search}%`]
     );
 

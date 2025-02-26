@@ -25,7 +25,10 @@ export default ({ input, datas, handleClick }) => {
                                 ) : (
                                     <FontAwesomeIcon icon={faUserCircle} size="2x" />
                                 )}
-                                <span>{data.username}</span>
+                                <div className="d-flex flex-column align-items-start">
+                                    <span className="fw-bold"><small>{data.social_handle}</small></span>
+                                    <span>{data.username}</span>
+                                </div>
                             </div>
                         )}
                     </div>
