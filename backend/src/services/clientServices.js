@@ -81,6 +81,29 @@ export const searchClients = async (search) => {
     return [...usersQuery.rows, ...books]; // Combina usuários e livros
 };
 
+export const getUserProfile = async (social_handle, userId) => {
+    const { rows } = await query(
+        `
+        SELECT 
+            u.id,
+            u.username, 
+            u.social_handle, 
+            u.picture, 
+            (SELECT COUNT(*) FROM books WHERE user_id = u.id) AS book_count,
+            (SELECT COUNT(*) FROM followers WHERE followed_id = u.id) AS followers_count,
+            (SELECT COUNT(*) FROM followers WHERE follower_id = u.id) AS following_count,
+            EXISTS (
+                SELECT 1 FROM followers WHERE follower_id = $2 AND followed_id = u.id
+            ) AS is_following
+        FROM users u
+        WHERE u.social_handle = $1
+        `,
+        [social_handle, userId]
+    );
+
+    return rows[0];
+};
+
 export const followUser = async (followerId, followedId) => {
     // Verifica se o relacionamento já existe
     const existingFollow = await query(

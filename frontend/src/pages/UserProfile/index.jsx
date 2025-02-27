@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Header from "../../components/Header";
 import Cards from "../../components/Cards";
+import ProfileHeader from "../../components/ProfileHeader";
 
 export default () => {
     const { social_handle } = useParams(); // Obtendo o identificador do usuário pela URL
@@ -36,7 +37,7 @@ export default () => {
             <div className="bg-light min-vh-100">
                 <div className="container">
                     <div className="pt-5">
-                        <h1>{data.username || 'Username'}</h1>
+                        <ProfileHeader social_handle={social_handle} userId={userId} />
                         <Cards data={data} userId={userId} isLoading={isLoading} />
                     </div>
                 </div>

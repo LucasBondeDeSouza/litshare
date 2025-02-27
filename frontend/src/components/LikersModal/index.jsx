@@ -28,7 +28,7 @@ export default ({ show, onHide, likers, userId }) => {
                                     </Link>
                                 </div>
 
-                                {liker.id !== userId && (
+                                {liker.id != userId && (
                                     <FollowButton
                                         initialIsFollowing={liker.isfollowing}
                                         followedId={liker.id}

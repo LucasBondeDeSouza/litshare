@@ -55,6 +55,19 @@ export const searchClients = async (req, res) => {
     }
 }
 
+export const getUserProfile = async (req, res) => {
+    try {
+        const { social_handle } = req.params
+        const { userId } = req.query;
+        const userProfile = await clientService.getUserProfile(social_handle, userId)
+        console.log(userProfile)
+        res.status(200).json(userProfile)
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
 export const followUser = async (req, res) => {
     try {
         const { followerId, followedId } = req.body;

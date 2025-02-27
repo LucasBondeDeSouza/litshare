@@ -54,6 +54,14 @@ img.list-picture, .dropdown-picture {
 }
 /* End Header */
 
+/* Profile Header */
+img.profile-header-picture {
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+}
+/* End Profile Header */
+
 /* Cards */
 .cards-group {
     display: flex;
