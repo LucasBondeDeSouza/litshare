@@ -27,6 +27,21 @@ export const getBooks = async (req, res) => {
     }
 };
 
+export const getBookBySocialHandle = async (req, res) => {
+    try {
+        const { social_handle } = req.params
+        const { userId } = req.query;
+        const user = await bookService.getBookBySocialHandle(social_handle, userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json(user);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
 export const toggleLike = async (req, res) => {
     try {
         const { userId, bookId } = req.body;

@@ -84,6 +84,39 @@ export const getBooks = async (id) => {
     return booksWithDetails;
 };
 
+export const getBookBySocialHandle = async (social_handle, userId) => {
+    const { rows } = await query(
+        `SELECT 
+                u.id AS user_id, 
+                u.username, 
+                u.social_handle, 
+                u.picture, 
+                b.id AS book_id, 
+                b.title, 
+                b.review, 
+                b.rating,
+                CASE 
+                    WHEN l.user_id IS NOT NULL THEN TRUE 
+                    ELSE FALSE 
+                END AS liked_by_user,
+                COALESCE(likes_count.count, 0) AS like_count
+            FROM books b
+            JOIN users u ON b.user_id = u.id
+            LEFT JOIN likes l ON b.id = l.book_id AND l.user_id = $2
+            LEFT JOIN (
+                SELECT book_id, COUNT(*) AS count
+                FROM likes
+                GROUP BY book_id
+            ) likes_count ON b.id = likes_count.book_id
+            WHERE u.social_handle = $1
+            ORDER BY b.id DESC`,
+        [social_handle, userId]
+    );
+    const booksWithDetails = await Promise.all(rows.map(fetchBookData));
+
+    return booksWithDetails;
+}
+
 export const toggleLike = async (userId, bookId) => {
     try {
         // Verificar se o usuário já deu like no livro
