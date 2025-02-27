@@ -16,7 +16,7 @@ export default () => {
         } else {
             console.error('No user ID found in localStorage');
         }
-    }, []);
+    }, [social_handle, userId]);
 
     const getBooks = async () => {
         try {

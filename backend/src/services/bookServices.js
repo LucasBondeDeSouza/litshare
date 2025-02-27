@@ -110,7 +110,7 @@ export const toggleLike = async (userId, bookId) => {
 export const getLikers = async (userId, bookId) => {
     try {
         const { rows } = await query(
-            `SELECT u.id, u.username, u.picture,
+            `SELECT u.id, u.username, u.social_handle, u.picture,
                     EXISTS (SELECT 1 FROM followers f WHERE f.follower_id = $1 AND f.followed_id = u.id) AS isFollowing
              FROM users u
              JOIN likes l ON u.id = l.user_id
