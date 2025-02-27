@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import FollowButton from "../FollowButton";
 
-export default ({ social_handle, userId }) => {
+export default ({ social_handle, userId, setProfileId }) => {
     const [data, setData] = useState({})
 
     useEffect(() => {
@@ -26,6 +26,8 @@ export default ({ social_handle, userId }) => {
             console.error('Error fetching user data:', err);
         }
     };
+
+    setProfileId(data.id)
 
     return (
         <div className="row justify-content-center">

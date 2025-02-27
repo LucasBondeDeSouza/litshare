@@ -2,12 +2,17 @@ import React from "react";
 import UserProfile from "../UserProfile";
 import StarRating from "./StarRating";
 import LikeButton from "./LikeButton";
+import DropdownMenu from "../DropdownMenu";
 
-export default ({ book, userId, toggleFlip }) => {
+export default ({ book, userId, profileId, toggleFlip }) => {
 
     return (
         <div className="flip-card-front">
-            <UserProfile username={book.username} social_handle={book.social_handle} picture={book.picture} />
+            <div className="d-flex justify-content-between">
+                <UserProfile username={book.username} social_handle={book.social_handle} picture={book.picture} />
+
+                {profileId == userId && <DropdownMenu />}
+            </div>
 
             <div className="card-image" onClick={() => toggleFlip(book.book_id)}>
                 <img src={book.cover} alt={book.title} />

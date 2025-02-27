@@ -3,7 +3,7 @@ import CardFront from "./CardFront";
 import CardBack from "./CardBack";
 import SkeletonCard from "./SkeletonCard";
 
-export default ({ data, userId, isLoading }) => {
+export default ({ data, userId, profileId, isLoading }) => {
     const [flippedBooks, setFlippedBooks] = useState({});
 
     useEffect(() => {
@@ -29,8 +29,8 @@ export default ({ data, userId, isLoading }) => {
                 data.map(book => (
                     <div key={book.book_id} className={`flip-card flip-horizontal-left ${flippedBooks[book.book_id] ? "flipped" : ""}`}>
                         <div className="flip-card-inner">
-                            <CardFront book={book} userId={userId} toggleFlip={toggleFlip} />
-                            <CardBack book={book} toggleFlip={toggleFlip} />
+                            <CardFront book={book} userId={userId} profileId={profileId} toggleFlip={toggleFlip} />
+                            <CardBack book={book} userId={userId} profileId={profileId} toggleFlip={toggleFlip} />
                         </div>
                     </div>
                 ))

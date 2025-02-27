@@ -10,6 +10,7 @@ export default () => {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const userId = localStorage.getItem('userId')
+    const [profileId, setProfileId] = useState()
 
     useEffect(() => {
         if (userId) {
@@ -37,8 +38,8 @@ export default () => {
             <div className="bg-light min-vh-100">
                 <div className="container">
                     <div className="pt-5">
-                        <ProfileHeader social_handle={social_handle} userId={userId} />
-                        <Cards data={data} userId={userId} isLoading={isLoading} />
+                        <ProfileHeader social_handle={social_handle} userId={userId} setProfileId={setProfileId} />
+                        <Cards data={data} userId={userId} profileId={profileId} isLoading={isLoading} />
                     </div>
                 </div>
             </div>
