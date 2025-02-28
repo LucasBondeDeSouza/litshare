@@ -74,6 +74,16 @@ export const deleteBook = async (bookId) => {
     }
 };
 
+export const editBook = async (bookId, editReview, editRating) => {
+
+    const { rows } = await query(
+        `UPDATE books SET review = $1, rating = $2 WHERE id = $3 RETURNING *`,
+        [editReview, editRating, bookId]
+    )
+
+    return rows[0]
+}
+
 export const getBooks = async (id) => {
     const { rows } = await query(
         `SELECT u.id AS user_id, u.username, u.social_handle, u.picture, b.id AS book_id, b.title, b.review, b.rating,

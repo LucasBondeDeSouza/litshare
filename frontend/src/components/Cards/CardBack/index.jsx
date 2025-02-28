@@ -9,7 +9,7 @@ export default ({ book, userId, profileId, toggleFlip, updateBooks }) => {
             <div className="d-flex justify-content-between">
                 <UserProfile username={book.username} social_handle={book.social_handle} picture={book.picture} />
 
-                {profileId == userId && <DropdownMenu bookId={book.book_id} updateBooks={updateBooks} />}
+                {profileId == userId && <DropdownMenu book={book} bookId={book.book_id} updateBooks={updateBooks} />}
             </div>
 
             <div className="card-body" onClick={() => toggleFlip(book.book_id)}>

@@ -27,6 +27,24 @@ export const deleteBook = async (req, res) => {
     }
 };
 
+export const editBook = async (req, res) => {
+    try {
+        const bookId = req.params.bookId;
+        const { editReview, editRating } = req.body
+        
+        const editBook = await bookService.editBook(bookId, editReview, editRating)
+
+        if (!editBook) {
+            return res.status(404).json({ message: 'Book not found' })
+        }
+
+        res.status(200).json(editBook)
+    } catch (err) {
+        console.log('Error edit book: ', err)
+        res.status(500).json({ message: 'Internal Server Error' })
+    }
+}
+
 export const getBooks = async (req, res) => {
     try {
         const { id } = req.params;
