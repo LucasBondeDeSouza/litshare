@@ -4,10 +4,11 @@ import { Button, Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 
-export default ({ bookId }) => {
+export default ({ bookId, updateBooks }) => {
     const handleDelete = async (id) => {
         try {
             await axios.delete(`http://localhost:3000/api/books/${id}`);
+            updateBooks(id)
         } catch (error) {
             console.error("Error deleting book:", error);
             alert("There was an error deleting the book.");

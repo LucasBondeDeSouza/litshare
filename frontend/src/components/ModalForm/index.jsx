@@ -80,6 +80,7 @@ export default ({ onClose, userId }) => {
             <Modal.Header closeButton>
                 <Modal.Title>New Book</Modal.Title>
             </Modal.Header>
+            
             <Modal.Body ref={modalRef}>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" style={{ position: "relative" }}>
