@@ -1,19 +1,18 @@
 import React from "react";
-import axios from "axios"
-
+import axios from "axios";
 import { Button, Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 export default ({ bookId }) => {
-
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/api/books/${id}`)
-        } catch (err) {
-            console.log(err)
+            await axios.delete(`http://localhost:3000/api/books/${id}`);
+        } catch (error) {
+            console.error("Error deleting book:", error);
+            alert("There was an error deleting the book.");
         }
-    }
+    };
 
     return (
         <Dropdown align="end">
@@ -32,4 +31,4 @@ export default ({ bookId }) => {
             </Dropdown.Menu>
         </Dropdown>
     );
-}
+};

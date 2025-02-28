@@ -16,21 +16,16 @@ export const addBooks = async (req, res) => {
     }
 };
 
-export const deleteBooks = async (req, res) => {
+export const deleteBook = async (req, res) => {
     try {
-        const bookId = req.params.id
-        const deleted = await bookService.deleteBook(bookId)
-
-        if (!deleted) {
-            return res.status(404).json({ message: 'Client not found' })
-        }
-
-        res.status(200).send()
+        const { bookId } = req.params;
+        await bookService.deleteBook(bookId);
+        res.status(200).json({ message: "Book deleted successfully" });
     } catch (err) {
-        console.log('Error deleting client: ', err)
-        res.status(500).json({ message: 'Internal Server Error' })
+        console.error("Error deleting book:", err);
+        res.status(500).json({ error: "Internal server error" });
     }
-}
+};
 
 export const getBooks = async (req, res) => {
     try {

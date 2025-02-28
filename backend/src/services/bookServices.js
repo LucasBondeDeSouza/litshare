@@ -56,9 +56,23 @@ export const addBook = async (title, review, rating, userId) => {
 };
 
 export const deleteBook = async (bookId) => {
-    const { rows } = await query(`DELETE FROM books WHERE id = $1`, [bookId])
-    return rows > 0
-}
+    try {
+        // Deleta o livro baseado no ID
+        const { rowCount } = await query(
+            `DELETE FROM books WHERE id = $1`,
+            [bookId]
+        );
+
+        if (rowCount === 0) {
+            throw new Error("Book not found");
+        }
+
+        return { message: "Book deleted successfully" };
+    } catch (error) {
+        console.error("Error deleting book:", error);
+        throw error;
+    }
+};
 
 export const getBooks = async (id) => {
     const { rows } = await query(
