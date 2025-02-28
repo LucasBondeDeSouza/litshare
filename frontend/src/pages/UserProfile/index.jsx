@@ -32,10 +32,6 @@ export default () => {
         }
     };
 
-    const updateBooks = async (deletedBookId) => {
-        setData((prevData) => prevData.filter(book => book.book_id !== deletedBookId));
-    };
-
     return (
         <>
             <Header />
@@ -43,7 +39,7 @@ export default () => {
                 <div className="container">
                     <div className="pt-5">
                         <ProfileHeader social_handle={social_handle} userId={userId} setProfileId={setProfileId} />
-                        <Cards data={data} userId={userId} profileId={profileId} isLoading={isLoading} updateBooks={updateBooks} />
+                        <Cards data={data} userId={userId} profileId={profileId} isLoading={isLoading} getBooks={getBooks} />
                     </div>
                 </div>
             </div>

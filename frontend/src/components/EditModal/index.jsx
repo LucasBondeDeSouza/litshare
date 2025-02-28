@@ -6,7 +6,7 @@ import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 
 import { Form, Modal, Button } from "react-bootstrap"
 
-export default ({ onClose, bookId, title, review, rating }) => {
+export default ({ onClose, bookId, title, review, rating, getBooks }) => {
     const [editReview, setEditReview] = useState(review)
     const [editRating, setEditRating] = useState(rating)
 
@@ -25,6 +25,7 @@ export default ({ onClose, bookId, title, review, rating }) => {
         try {
             const bookData = { editReview, editRating }
             await axios.put(`http://localhost:3000/api/books/${bookId}`, bookData)
+            getBooks()
             onClose()
         } catch (err) {
             console.error(err);

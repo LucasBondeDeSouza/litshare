@@ -5,13 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import EditModal from "../../EditModal";
 
-export default ({ book, bookId, updateBooks }) => {
+export default ({ book, bookId, getBooks }) => {
     const [showModal, setShowModal] = useState(false)
     
     const handleDelete = async (id) => {
         try {
             await axios.delete(`http://localhost:3000/api/books/${id}`);
-            updateBooks(id)
+            getBooks()
         } catch (error) {
             console.error("Error deleting book:", error);
             alert("There was an error deleting the book.");
@@ -36,7 +36,7 @@ export default ({ book, bookId, updateBooks }) => {
                 </Dropdown.Menu>
             </Dropdown>
 
-            {showModal && <EditModal onClose={() => setShowModal(false)} bookId={bookId} title={book.title} review={book.review} rating={book.rating} />}
+            {showModal && <EditModal onClose={() => setShowModal(false)} bookId={bookId} title={book.title} review={book.review} rating={book.rating} getBooks={getBooks} />}
         </>
     );
 };
