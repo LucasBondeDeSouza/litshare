@@ -110,6 +110,10 @@ img.profile-header-picture {
     /*align-items: start;*/
 }
 
+.dropdown-toggle::after {
+    display: none !important; 
+}
+
 .like-button {
     cursor: pointer;
 }

@@ -55,6 +55,11 @@ export const addBook = async (title, review, rating, userId) => {
     return rows[0];
 };
 
+export const deleteBook = async (bookId) => {
+    const { rows } = await query(`DELETE FROM books WHERE id = $1`, [bookId])
+    return rows > 0
+}
+
 export const getBooks = async (id) => {
     const { rows } = await query(
         `SELECT u.id AS user_id, u.username, u.social_handle, u.picture, b.id AS book_id, b.title, b.review, b.rating,

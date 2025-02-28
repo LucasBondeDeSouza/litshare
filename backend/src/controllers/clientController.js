@@ -60,7 +60,6 @@ export const getUserProfile = async (req, res) => {
         const { social_handle } = req.params
         const { userId } = req.query;
         const userProfile = await clientService.getUserProfile(social_handle, userId)
-        console.log(userProfile)
         res.status(200).json(userProfile)
     } catch (err) {
         console.log(err);

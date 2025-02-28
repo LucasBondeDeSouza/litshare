@@ -14,6 +14,7 @@ router.post('/clients/follow', clientController.followUser)
 router.post('/clients/unfollow', clientController.unfollowUser)
 
 router.post('/books/newBook', bookController.addBooks)
+router.delete('/books/:id', bookController.deleteBooks)
 router.get('/books/home/:id', bookController.getBooks)
 router.get('/books/:social_handle', bookController.getBookBySocialHandle)
 router.post('/books/like', bookController.toggleLike)

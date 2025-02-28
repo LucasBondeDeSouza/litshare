@@ -16,6 +16,22 @@ export const addBooks = async (req, res) => {
     }
 };
 
+export const deleteBooks = async (req, res) => {
+    try {
+        const bookId = req.params.id
+        const deleted = await bookService.deleteBook(bookId)
+
+        if (!deleted) {
+            return res.status(404).json({ message: 'Client not found' })
+        }
+
+        res.status(200).send()
+    } catch (err) {
+        console.log('Error deleting client: ', err)
+        res.status(500).json({ message: 'Internal Server Error' })
+    }
+}
+
 export const getBooks = async (req, res) => {
     try {
         const { id } = req.params;
