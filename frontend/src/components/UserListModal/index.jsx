@@ -5,11 +5,12 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import FollowButton from "../FollowButton";
 import { Link } from "react-router-dom";
 
-export default ({ show, onHide, datas, userId }) => {
+export default ({ show, onHide, titleModal, datas, userId }) => {
+
     return (
         <Modal show={show} onHide={onHide}>
             <Modal.Header closeButton>
-                <Modal.Title>Likes</Modal.Title>
+                <Modal.Title>{titleModal}</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
@@ -23,7 +24,7 @@ export default ({ show, onHide, datas, userId }) => {
                                     ) : (
                                         <FontAwesomeIcon icon={faUserCircle} size="2x" />
                                     )}
-                                    <Link to={`/user/${data.social_handle}`} className="text-decoration-none text-dark">
+                                    <Link to={`/user/${data.social_handle}`} onClick={onHide} className="text-decoration-none text-dark">
                                         <span>{data.username}</span>
                                     </Link>
                                 </div>
@@ -41,5 +42,5 @@ export default ({ show, onHide, datas, userId }) => {
                 )}
             </Modal.Body>
         </Modal>
-    );
-};
+    )
+}

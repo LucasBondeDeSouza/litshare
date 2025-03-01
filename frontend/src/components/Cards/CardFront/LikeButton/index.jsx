@@ -4,6 +4,7 @@ import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
 import ModalForm from "../../../LikersModal";
+import UserListModal from "../../../UserListModal";
 
 export default ({ bookId, userId, initialLiked, initialLikeCount }) => {
     const [liked, setLiked] = useState(initialLiked);
@@ -49,7 +50,7 @@ export default ({ bookId, userId, initialLiked, initialLikeCount }) => {
                     : likeCount}
             </span>
 
-            <ModalForm show={showModal} onHide={() => setShowModal(false)} likers={likers} userId={userId} />
+            <UserListModal show={showModal} onHide={() => setShowModal(false)} titleModal={"Likers"} datas={likers} userId={userId} />
         </div>
     )
 }

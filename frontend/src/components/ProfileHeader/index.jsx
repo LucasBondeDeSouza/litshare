@@ -4,6 +4,8 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import FollowButton from "../FollowButton";
+import Followers from "./Followers";
+import Following from "./Following";
 
 export default ({ social_handle, userId, setProfileId }) => {
     const [data, setData] = useState({})
@@ -62,15 +64,9 @@ export default ({ social_handle, userId, setProfileId }) => {
                             <div className="text-muted">Books</div>
                         </div>
 
-                        <div className="text-center">
-                            <span className="fw-bold">{data.followers_count}</span>
-                            <div className="text-muted">Followers</div>
-                        </div>
+                        <Followers followers_count={data.followers_count} userId={userId} profileId={data.id} />
 
-                        <div className="text-center">
-                            <span className="fw-bold">{data.following_count}</span>
-                            <div className="text-muted">Following</div>
-                        </div>
+                        <Following following_count={data.following_count} userId={userId} profileId={data.id} />
                     </div>
                 </div>
             </div>

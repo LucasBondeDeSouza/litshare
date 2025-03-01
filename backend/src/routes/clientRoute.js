@@ -12,6 +12,8 @@ router.get('/clients/search', clientController.searchClients)
 router.get('/clients/:social_handle', clientController.getUserProfile)
 router.post('/clients/follow', clientController.followUser)
 router.post('/clients/unfollow', clientController.unfollowUser)
+router.get('/clients/:profileId/followers', clientController.getFollowers);
+router.get('/clients/:profileId/following', clientController.getFollowing);
 
 router.post('/books/newBook', bookController.addBooks)
 router.delete('/books/:bookId', bookController.deleteBook);

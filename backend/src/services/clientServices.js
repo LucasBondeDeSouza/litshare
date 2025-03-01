@@ -132,3 +132,45 @@ export const unfollowUser = async (followerId, followedId) => {
 
     return { message: "User unfollowed successfully" };
 };
+
+export const getFollowers = async (userId, profileId) => {
+    const { rows } = await query(
+        `SELECT 
+            u.id, 
+            u.username, 
+            u.social_handle, 
+            u.picture,
+            EXISTS (
+                SELECT 1 
+                FROM followers f2 
+                WHERE f2.follower_id = $1 AND f2.followed_id = u.id
+            ) AS isfollowing
+        FROM users u
+        JOIN followers f ON u.id = f.follower_id
+        WHERE f.followed_id = $2`,
+        [userId, profileId]
+    );
+
+    return rows;
+};
+
+export const getFollowing = async (userId, profileId) => {
+    const { rows } = await query(
+        `SELECT 
+            u.id, 
+            u.username, 
+            u.social_handle, 
+            u.picture,
+            EXISTS (
+                SELECT 1 
+                FROM followers f2 
+                WHERE f2.follower_id = $1 AND f2.followed_id = u.id
+            ) AS isfollowing
+        FROM users u
+        JOIN followers f ON u.id = f.followed_id
+        WHERE f.follower_id = $2`,
+        [userId, profileId]
+    );
+
+    return rows;
+};

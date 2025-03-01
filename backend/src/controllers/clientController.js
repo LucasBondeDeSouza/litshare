@@ -90,3 +90,27 @@ export const unfollowUser = async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 };
+
+export const getFollowers = async (req, res) => {
+    try {
+        const { userId } = req.query
+        const { profileId } = req.params
+        const followers = await clientService.getFollowers(userId, profileId)
+        res.status(200).json(followers)
+    } catch (err) {
+        console.error("Error retrieving followers:", err);
+        res.status(500).json({ error: "Internal server error" });
+    }
+}
+
+export const getFollowing = async (req, res) => {
+    try {
+        const { userId } = req.query
+        const { profileId } = req.params
+        const following = await clientService.getFollowing(userId, profileId)
+        res.status(200).json(following)
+    } catch (err) {
+        console.error("Error retrieving followers:", err);
+        res.status(500).json({ error: "Internal server error" });
+    }
+}

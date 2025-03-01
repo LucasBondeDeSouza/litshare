@@ -38,8 +38,19 @@ export default () => {
             <div className="bg-light min-vh-100">
                 <div className="container">
                     <div className="pt-5">
-                        <ProfileHeader social_handle={social_handle} userId={userId} setProfileId={setProfileId} />
-                        <Cards data={data} userId={userId} profileId={profileId} isLoading={isLoading} getBooks={getBooks} />
+                        <ProfileHeader 
+                            social_handle={social_handle} 
+                            userId={userId} 
+                            setProfileId={setProfileId} 
+                        />
+
+                        <Cards 
+                            data={data} 
+                            userId={userId} 
+                            profileId={profileId} 
+                            isLoading={isLoading} 
+                            getBooks={getBooks} 
+                        />
                     </div>
                 </div>
             </div>
