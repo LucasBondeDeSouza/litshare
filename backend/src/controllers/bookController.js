@@ -56,6 +56,17 @@ export const getBooks = async (req, res) => {
     }
 };
 
+export const getBookSearch = async (req, res) => {
+    try {
+        const { title } = req.query;
+        const books = await bookService.getBookSearch(title)
+        res.status(200).json(books);
+    } catch (err) {
+        console.error("Error retrieving books:", err);
+        res.status(500).json({ error: "Internal server error" });
+    }
+}
+
 export const getBookBySocialHandle = async (req, res) => {
     try {
         const { social_handle } = req.params

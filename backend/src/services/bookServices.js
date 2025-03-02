@@ -113,6 +113,13 @@ export const getBooks = async (id) => {
     return booksWithDetails;
 };
 
+export const getBookSearch = async (title) => {
+    const { rows } = await query(
+        `SELECT * FROM books WHERE title = $1`, [title]
+    )
+    return rows
+}
+
 export const getBookBySocialHandle = async (social_handle, userId) => {
     const { rows } = await query(
         `SELECT 

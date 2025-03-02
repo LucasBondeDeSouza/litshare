@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UserProfile from "./pages/UserProfile";
+import BookResults from "./pages/BookResults";
 
 export default () => {
 
@@ -15,6 +16,7 @@ export default () => {
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
         <Route path="/user/:social_handle" element={<UserProfile />} />
+        <Route path="/books/:title" element={<BookResults />} />
       </Routes>
     </Router>
   );
