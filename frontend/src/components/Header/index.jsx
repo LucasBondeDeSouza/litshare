@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom"
 import { Container, NavDropdown, Form, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faUserCircle } from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +12,7 @@ export default () => {
     const [results, setResults] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [data, setData] = useState({});
+    const navigate = useNavigate();
     const searchRef = useRef(null);
     const userId = localStorage.getItem('userId')
 
@@ -58,8 +60,12 @@ export default () => {
     }, []);
 
     const handleClick = (social_handle, title) => {
-        console.log(social_handle)
-        console.log(title)
+        if (social_handle) {
+            navigate(`/user/${social_handle}`)
+        } 
+        if (title) {
+            navigate(`/book/${title}`)
+        }
     }
 
     return (
@@ -95,7 +101,7 @@ export default () => {
                             )}
 
                             <NavDropdown className="fs-5" title={data?.username ? (data.username.length > 14 ? data.username.slice(0, 14) + "..." : data.username) : 'User'} menuVariant="light">
-                                <NavDropdown.Item href="">My Profile</NavDropdown.Item>
+                                <NavDropdown.Item href={`/user/${data.social_handle}`}>My Profile</NavDropdown.Item>
                                 <NavDropdown.Item onClick={() => setShowModal(true)}>New Book</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="">Sign out</NavDropdown.Item>
