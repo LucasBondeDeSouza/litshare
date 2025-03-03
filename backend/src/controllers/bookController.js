@@ -58,7 +58,7 @@ export const getBooks = async (req, res) => {
 
 export const getBookSearch = async (req, res) => {
     try {
-        const { title } = req.query;
+        const { title } = req.params;
         const books = await bookService.getBookSearch(title)
         res.status(200).json(books);
     } catch (err) {

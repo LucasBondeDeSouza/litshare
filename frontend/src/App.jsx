@@ -16,7 +16,7 @@ export default () => {
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
         <Route path="/user/:social_handle" element={<UserProfile />} />
-        <Route path="/books/:title" element={<BookResults />} />
+        <Route path="/books/search/:title" element={<BookResults />} />
       </Routes>
     </Router>
   );

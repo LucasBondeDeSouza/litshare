@@ -62,9 +62,8 @@ export default () => {
     const handleClick = (social_handle, title) => {
         if (social_handle) {
             navigate(`/user/${social_handle}`)
-        } 
-        if (title) {
-            navigate(`/book/${title}`)
+        } else if (title) {
+            navigate(`/books/search/${title}`)
         }
     }
 
