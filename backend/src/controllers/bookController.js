@@ -59,7 +59,8 @@ export const getBooks = async (req, res) => {
 export const getBookSearch = async (req, res) => {
     try {
         const { title } = req.params;
-        const books = await bookService.getBookSearch(title)
+        const { userId } = req.query
+        const books = await bookService.getBookSearch(title, userId)
         res.status(200).json(books);
     } catch (err) {
         console.error("Error retrieving books:", err);
@@ -104,6 +105,18 @@ export const getLikers = async (req, res) => {
         res.status(200).json(likers);
     } catch (err) {
         console.error("Error retrieving likers:", err);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+export const getBookMetrics = async (req, res) => {
+    try {
+        const { title } = req.params;
+        const metrics = await bookService.getBookMetrics(title);
+        console.log(title)
+        res.status(200).json(metrics);
+    } catch (err) {
+        console.error("Error fetching book metrics:", err);
         res.status(500).json({ error: "Internal server error" });
     }
 };

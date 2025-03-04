@@ -113,12 +113,37 @@ export const getBooks = async (id) => {
     return booksWithDetails;
 };
 
-export const getBookSearch = async (title) => {
+export const getBookSearch = async (title, userId) => {
     const { rows } = await query(
-        `SELECT * FROM books WHERE title = $1`, 
-        [title]
-    )
-    return rows
+        `SELECT 
+                u.id AS user_id, 
+                u.username, 
+                u.social_handle, 
+                u.picture, 
+                b.id AS book_id, 
+                b.title, 
+                b.review, 
+                b.rating,
+                CASE 
+                    WHEN l.user_id IS NOT NULL THEN TRUE 
+                    ELSE FALSE 
+                END AS liked_by_user,
+                COALESCE(likes_count.count, 0) AS like_count
+            FROM books b
+            JOIN users u ON b.user_id = u.id
+            LEFT JOIN likes l ON b.id = l.book_id AND l.user_id = $2
+            LEFT JOIN (
+                SELECT book_id, COUNT(*) AS count
+                FROM likes
+                GROUP BY book_id
+            ) likes_count ON b.id = likes_count.book_id
+            WHERE b.title = $1
+            ORDER BY like_count DESC, b.id DESC`,
+        [title, userId]
+    );
+    const booksWithDetails = await Promise.all(rows.map(fetchBookData));
+
+    return booksWithDetails;
 }
 
 export const getBookBySocialHandle = async (social_handle, userId) => {
@@ -193,4 +218,17 @@ export const getLikers = async (userId, bookId) => {
         console.error("Error fetching likers:", error);
         throw error;
     }
+};
+
+export const getBookMetrics = async (title) => {
+    const { rows } = await query(
+        `SELECT 
+            COUNT(*) AS total_books, 
+            COALESCE(AVG(rating), 0) AS average_rating
+         FROM books 
+         WHERE title = $1`,
+        [title]
+    );
+
+    return rows[0];
 };

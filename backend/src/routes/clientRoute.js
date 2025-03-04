@@ -23,5 +23,6 @@ router.get('/books/search/:title', bookController.getBookSearch)
 router.get('/books/:social_handle', bookController.getBookBySocialHandle)
 router.post('/books/like', bookController.toggleLike)
 router.get('/books/:bookId/likers', bookController.getLikers)
+router.get('/books/metrics/:title', bookController.getBookMetrics);
 
 export default router

@@ -4,6 +4,7 @@ import axios from "axios"
 
 import Header from "../../components/Header";
 import Cards from "../../components/Cards";
+import BookMetrics from "../../components/BookMetrics";
 
 export default () => {
     const { title } = useParams();
@@ -22,9 +23,8 @@ export default () => {
     const getBooks = async () => {
         try {
             setIsLoading(true);
-            const response = await axios.get(`http://localhost:3000/api/books/search/${title}`)
+            const response = await axios.get(`http://localhost:3000/api/books/search/${title}?userId=${userId}`)
             setData(response.data)
-            console.log(response.data)
         } catch (err) {
             console.error('Error fetching user data:', err);
         } finally {
@@ -39,12 +39,14 @@ export default () => {
             <div className="bg-light min-vh-100">
                 <div className="container">
                     <div className="pt-5">
-                        {data.map((book) => (
-                            <div className="d-flex flex-column">
-                                <span>{book.title}</span>
-                                <span>{book.review}</span>
-                            </div>
-                        ))}
+
+                        <BookMetrics title={title} />
+
+                        <Cards 
+                            data={data} 
+                            userId={userId} 
+                            isLoading={isLoading} 
+                        />
                     </div>
                 </div>
             </div>
