@@ -60,10 +60,10 @@ export default ({ onClose, userId }) => {
         }
     }
 
-    const handleBookClick = (bookTitle) => {
+    const handleBookClick = (_, bookTitle) => {
         setTitle(bookTitle);
         setBooks([]);
-    };
+    };    
 
     const renderStars = (rating) => {
         return (
