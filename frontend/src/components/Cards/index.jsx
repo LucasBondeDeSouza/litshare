@@ -22,7 +22,7 @@ export default ({ data, userId, profileId, isLoading, getBooks }) => {
     };
 
     return (
-        <div className="cards-group">
+        <div className="cards-group my-5">
             {isLoading ? (
                 Array.from({ length: 3 }).map((_, index) => <SkeletonCard key={index} />)
             ) : data.length > 0 ? (

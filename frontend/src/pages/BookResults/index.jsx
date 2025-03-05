@@ -5,6 +5,7 @@ import axios from "axios"
 import Header from "../../components/Header";
 import Cards from "../../components/Cards";
 import BookMetrics from "../../components/BookMetrics";
+import Footer from "../../components/Footer";
 
 export default () => {
     const { title } = useParams();
@@ -36,10 +37,9 @@ export default () => {
         <>
             <Header />
 
-            <div className="bg-light min-vh-100">
+            <div className="bg-light min-vh-100 pb-5">
                 <div className="container">
                     <div className="pt-5">
-
                         <BookMetrics title={title} />
 
                         <Cards 
@@ -50,6 +50,8 @@ export default () => {
                     </div>
                 </div>
             </div>
+
+            <Footer />
         </>
     )
 }
