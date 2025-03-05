@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import UserProfile from "./pages/UserProfile";
+import Profile from "./pages/Profile";
 import BookResults from "./pages/BookResults";
 
 export default () => {
@@ -15,7 +15,7 @@ export default () => {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/user/:social_handle" element={<UserProfile />} />
+        <Route path="/user/:social_handle" element={<Profile />} />
         <Route path="/books/search/:title" element={<BookResults />} />
       </Routes>
     </Router>
