@@ -40,8 +40,8 @@ export default () => {
             <div className="bg-light min-vh-100 pb-5">
                 <div className="container">
                     <div className="pt-5">
-                        <BookMetrics title={title} />
-
+                        {data.length > 0 && <BookMetrics title={title} />}
+                        
                         <Cards 
                             data={data} 
                             userId={userId} 
