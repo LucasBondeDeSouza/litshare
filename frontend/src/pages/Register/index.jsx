@@ -25,12 +25,7 @@ export default () => {
 
             const response = await axios.post("http://localhost:3000/api/clients/register", clientData);
 
-            if (response.data && response.data.user && response.data.user.id) {
-                localStorage.setItem('userId', response.data.user.id); // Salva o ID do usuário
-                navigate('/home');
-            } else {
-                alert('Login failed: User ID not found');
-            }
+            navigate('/login')
 
             setName("");
             setSocialHandle("");

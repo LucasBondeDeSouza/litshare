@@ -71,7 +71,7 @@ export default () => {
         try {
             await axios.post('http://localhost:3000/api/clients/logout');  // Chama a rota de logout no backend
             localStorage.removeItem('userId');  // Remove o ID do usuário armazenado no localStorage
-            navigate('/');  // Redireciona para a página de login
+            navigate('/login');  // Redireciona para a página de login
         } catch (err) {
             console.error("Erro ao realizar logout:", err);
         }
@@ -81,7 +81,7 @@ export default () => {
         <div className="py-2 border-bottom bg-white sticky-top">
             <Container>
                 <div className="d-flex flex-wrap align-items-center justify-content-between">
-                    <a href="/home" className="d-flex align-items-center mb-lg-0 link-body-emphasis text-decoration-none">
+                    <a href="/" className="d-flex align-items-center mb-lg-0 link-body-emphasis text-decoration-none">
                         <FontAwesomeIcon icon={faBook} size="2x" className="me-2" />
                         <h1 className="display-6 mb-0 d-none d-lg-inline">LitShare</h1>
                     </a>

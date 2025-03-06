@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../auth/authContext";
 
 export default () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,8 +22,8 @@ export default () => {
 
             // Verifica se o login foi bem-sucedido e salva o ID do usuário no localStorage
             if (response.data && response.data.user && response.data.user.id) {
-                localStorage.setItem('userId', response.data.user.id); // Salva o ID do usuário
-                navigate('/home');
+                login(response.data.user.id); // Usa a função de login do contexto
+                navigate('/');
             } else {
                 alert('Login failed: User ID not found');
             }
