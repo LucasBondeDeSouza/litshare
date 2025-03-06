@@ -67,6 +67,16 @@ export default () => {
         }
     }
 
+    const handleLogout = async () => {
+        try {
+            await axios.post('http://localhost:3000/api/clients/logout');  // Chama a rota de logout no backend
+            localStorage.removeItem('userId');  // Remove o ID do usuário armazenado no localStorage
+            navigate('/');  // Redireciona para a página de login
+        } catch (err) {
+            console.error("Erro ao realizar logout:", err);
+        }
+    }
+
     return (
         <div className="py-2 border-bottom bg-white sticky-top">
             <Container>
@@ -103,7 +113,7 @@ export default () => {
                                 <NavDropdown.Item href={`/user/${data.social_handle}`}>My Profile</NavDropdown.Item>
                                 <NavDropdown.Item onClick={() => setShowModal(true)}>New Book</NavDropdown.Item>
                                 <NavDropdown.Divider />
-                                <NavDropdown.Item href="">Sign out</NavDropdown.Item>
+                                <NavDropdown.Item onClick={handleLogout}>Sign out</NavDropdown.Item>
                             </NavDropdown>
                         </Dropdown>
                     </div>

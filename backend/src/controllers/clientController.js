@@ -30,6 +30,20 @@ export const loginClient = async (req, res) => {
     }
 };
 
+export const logoutClient = (req, res) => {
+    try {
+        req.session.destroy((err) => {
+            if (err) {
+                return res.status(500).json({ message: "Internal Server Error" });
+            }
+            res.status(200).json({ message: "Logout realizado com sucesso" });
+        });
+    } catch (err) {
+        console.error("Error during logout:", err.message);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
 export const getClient = async (req, res) => {
     try {
         const { id } = req.params;

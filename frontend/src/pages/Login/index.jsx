@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 export default () => {
@@ -74,6 +75,15 @@ export default () => {
                                     </div>
 
                                     <button className="btn btn-dark w-100 fw-bold fs-5">Login</button>
+
+                                    <div className="card mt-3">
+                                        <div className="d-grid col-12">
+                                            <a href="http://localhost:3000/auth/google" className="btn btn-block">
+                                                <FontAwesomeIcon icon={faGoogle} size="lg" className="me-2" />
+                                                Sign In with Google
+                                            </a>
+                                        </div>
+                                    </div>
                                 </form>
 
                                 <hr className="my-4" />

@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 export default () => {
     const [name, setName] = useState("");
     const [social_handle, setSocialHandle] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,7 +23,14 @@ export default () => {
                 password
             }
 
-            await axios.post("http://localhost:3000/api/clients/register", clientData);
+            const response = await axios.post("http://localhost:3000/api/clients/register", clientData);
+
+            if (response.data && response.data.user && response.data.user.id) {
+                localStorage.setItem('userId', response.data.user.id); // Salva o ID do usuário
+                navigate('/home');
+            } else {
+                alert('Login failed: User ID not found');
+            }
 
             setName("");
             setSocialHandle("");
@@ -105,6 +115,15 @@ export default () => {
                                     <button className="btn btn-dark w-100 fw-bold fs-5">
                                         Register
                                     </button>
+
+                                    <div className="card mt-3">
+                                        <div className="d-grid col-12">
+                                            <a href="http://localhost:3000/auth/google" className="btn btn-block">
+                                                <FontAwesomeIcon icon={faGoogle} size="lg" className="me-2" />
+                                                Sign Up with Google
+                                            </a>
+                                        </div>
+                                    </div>
                                 </form>
 
                                 <hr className="my-4" />

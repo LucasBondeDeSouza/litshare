@@ -7,6 +7,7 @@ const router = express.Router()
 
 router.post('/clients/register', clientController.createClient)
 router.post('/clients/login', clientController.loginClient)
+router.post('/clients/logout', clientController.logoutClient)
 router.get('/clients/home/:id', clientController.getClient)
 router.get('/clients/search', clientController.searchClients)
 router.get('/clients/:social_handle', clientController.getUserProfile)
