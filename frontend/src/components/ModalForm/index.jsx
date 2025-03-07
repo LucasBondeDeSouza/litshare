@@ -4,7 +4,8 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import ListGroup from "../ListGroup";
 
 export default ({ onClose, userId }) => {
@@ -32,7 +33,7 @@ export default ({ onClose, userId }) => {
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
-                modalRef.current && !modalRef.current.contains(event.target) && 
+                modalRef.current && !modalRef.current.contains(event.target) &&
                 listRef.current && !listRef.current.contains(event.target)
             ) {
                 setBooks([]); // Esconde a lista se clicar fora do modal e da lista
@@ -50,6 +51,7 @@ export default ({ onClose, userId }) => {
         try {
             const bookData = { title, review, rating, userId };
             await axios.post("http://localhost:3000/api/books/newBook", bookData);
+            toast.success("Book added successfully!", { autoClose: 3000 });
 
             setTitle("");
             setReview("");
@@ -57,13 +59,14 @@ export default ({ onClose, userId }) => {
             onClose();
         } catch (err) {
             console.error("Error adding book:", err.response ? err.response.data : err.message)
+            toast.error("Failed to add book. Please try again.")
         }
     }
 
     const handleBookClick = (_, bookTitle) => {
         setTitle(bookTitle);
         setBooks([]);
-    };    
+    };
 
     const renderStars = (rating) => {
         return (
@@ -76,36 +79,38 @@ export default ({ onClose, userId }) => {
     };
 
     return (
-        <Modal show={true} onHide={onClose} centered>
-            <Modal.Header closeButton>
-                <Modal.Title>New Book</Modal.Title>
-            </Modal.Header>
-            
-            <Modal.Body ref={modalRef}>
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group className="mb-3" style={{ position: "relative" }}>
-                        <Form.Label>Title</Form.Label>
-                        <Form.Control type="text" placeholder="Enter book title" value={title} required onChange={(e) => setTitle(e.target.value)} />
-                        
-                        <div ref={listRef}>
-                            <ListGroup input={title} datas={books} handleClick={handleBookClick} />
-                        </div>
-                    </Form.Group>
+        <>
+            <Modal show={true} onHide={onClose} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>New Book</Modal.Title>
+                </Modal.Header>
 
-                    <Form.Group className="mb-3">
-                        <Form.Label>Review</Form.Label>
-                        <Form.Control as="textarea" placeholder="Write your review" value={review} required onChange={(e) => setReview(e.target.value)} />
-                    </Form.Group>
+                <Modal.Body ref={modalRef}>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3" style={{ position: "relative" }}>
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control type="text" placeholder="Enter book title" value={title} required onChange={(e) => setTitle(e.target.value)} />
 
-                    <Form.Group className="mb-3">
-                        <Form.Label>Rating</Form.Label>
-                        <Form.Range value={rating} min={0} max={5} step={1} onChange={(e) => setRating(Number(e.target.value))} />
-                        {renderStars(rating)}
-                    </Form.Group>
+                            <div ref={listRef}>
+                                <ListGroup input={title} datas={books} handleClick={handleBookClick} />
+                            </div>
+                        </Form.Group>
 
-                    <Button type="submit" className="btn btn-dark w-100 fw-bold fs-5">Add</Button>
-                </Form>
-            </Modal.Body>
-        </Modal>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Review</Form.Label>
+                            <Form.Control as="textarea" placeholder="Write your review" value={review} required onChange={(e) => setReview(e.target.value)} />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Rating</Form.Label>
+                            <Form.Range value={rating} min={0} max={5} step={1} onChange={(e) => setRating(Number(e.target.value))} />
+                            {renderStars(rating)}
+                        </Form.Group>
+
+                        <Button type="submit" className="btn btn-dark w-100 fw-bold fs-5">Add</Button>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+        </>
     );
 }

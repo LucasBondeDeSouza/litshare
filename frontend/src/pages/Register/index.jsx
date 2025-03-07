@@ -5,6 +5,8 @@ import { faBook } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Form, Button, InputGroup } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default () => {
     const [name, setName] = useState("");
@@ -22,11 +24,16 @@ export default () => {
                 social_handle: `@${social_handle}`,
                 email,
                 password
-            }
+            };
 
-            const response = await axios.post("http://localhost:3000/api/clients/register", clientData);
+            await axios.post("http://localhost:3000/api/clients/register", clientData);
+            
+            toast.success("Registration successful! Redirecting to login...", {
+                position: "top-right",
+                autoClose: 3000,
+            });
 
-            navigate('/login')
+            setTimeout(() => navigate("/login"), 3000);
 
             setName("");
             setSocialHandle("");
@@ -34,6 +41,10 @@ export default () => {
             setPassword("");
         } catch (err) {
             console.error("Error adding client:", err);
+            toast.error("Registration failed. Please try again.", {
+                position: "top-right",
+                autoClose: 3000,
+            });
         }
     };
 
@@ -83,6 +94,7 @@ export default () => {
                     </Card>
                 </Col>
             </Row>
+            <ToastContainer />
         </Container>
     );
 };
