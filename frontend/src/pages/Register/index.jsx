@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { Container, Row, Col, Card, Form, Button, InputGroup } from "react-bootstrap";
 
 export default () => {
     const [name, setName] = useState("");
@@ -37,103 +38,51 @@ export default () => {
     };
 
     return (
-        <div className="bg-light">
-            <div className="container d-flex vh-100 justify-content-center">
-                <div className="row justify-content-center align-self-center w-100">
-                    <div className="col-12 col-lg-6">
-                        <div className="card shadow p-2">
-                            <div className="card-body">
-                                <div className="d-flex justify-content-center align-items-center">
-                                    <FontAwesomeIcon
-                                        icon={faBook}
-                                        size="2x"
-                                        className="d-sm-inline d-lg-none me-3"
-                                    />
-                                    <FontAwesomeIcon
-                                        icon={faBook}
-                                        size="3x"
-                                        className="d-none d-lg-inline me-3"
-                                    />
-                                    <h1 className="display-6 text-body fw-bold">LitShare</h1>
-                                </div>
-
-                                <form method="dialog" onSubmit={handleSubmit}>
-                                    <div className="form-group my-3">
-                                        <input
-                                            type="text"
-                                            className="form-control py-2"
-                                            placeholder="Name"
-                                            value={name}
-                                            required
-                                            onChange={(e) => setName(e.target.value)}
-                                        />
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text" id="basic-addon1">@</span>
-                                        <input
-                                            type="text"
-                                            className="form-control py-2"
-                                            placeholder=""
-                                            value={social_handle}
-                                            required
-                                            onChange={(e) => {
-                                                // Impedir espaços no social_handle
-                                                const newValue = e.target.value.replace(/\s/g, "");
-                                                setSocialHandle(newValue);
-                                            }}
-                                        />
-                                    </div>
-
-                                    <div className="form-group my-3">
-                                        <input
-                                            type="email"
-                                            className="form-control py-2"
-                                            placeholder="Email"
-                                            value={email}
-                                            required
-                                            onChange={(e) => setEmail(e.target.value)}
-                                        />
-                                    </div>
-
-                                    <div className="form-group my-3">
-                                        <input
-                                            type="password"
-                                            className="form-control py-2"
-                                            placeholder="Password"
-                                            value={password}
-                                            required
-                                            onChange={(e) => setPassword(e.target.value)}
-                                        />
-                                    </div>
-
-                                    <button className="btn btn-dark w-100 fw-bold fs-5">
-                                        Register
-                                    </button>
-
-                                    <div className="card mt-3">
-                                        <div className="d-grid col-12">
-                                            <a href="http://localhost:3000/auth/google" className="btn btn-block">
-                                                <FontAwesomeIcon icon={faGoogle} size="lg" className="me-2" />
-                                                Sign Up with Google
-                                            </a>
-                                        </div>
-                                    </div>
-                                </form>
-
-                                <hr className="my-4" />
-
-                                <div className="d-flex justify-content-center">
-                                    <p className="mb-0 me-2">Have an account?</p>
-                                    <a className="text-decoration-none fw-bold" href="/" role="button">
-                                        Login
-                                    </a>
-                                </div>
+        <Container fluid className="bg-light min-vh-100 d-flex justify-content-center align-items-center">
+            <Row className="justify-content-center w-100">
+                <Col xs={12} lg={6}>
+                    <Card className="shadow p-2">
+                        <Card.Body>
+                            <div className="d-flex align-items-center justify-content-center mb-3">
+                                <FontAwesomeIcon icon={faBook} size="3x" className="me-3" />
+                                <h1 className="display-6 fw-bold m-0">LitShare</h1>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                            <Form noValidate onSubmit={handleSubmit}>
+                                <Form.Group className="mb-3">
+                                    <Form.Control type="text" placeholder="Name" value={name} required onChange={(e) => setName(e.target.value)} />
+                                </Form.Group>
+                                
+                                <InputGroup className="mb-3">
+                                    <InputGroup.Text>@</InputGroup.Text>
+                                    <Form.Control type="text" placeholder="" value={social_handle} required onChange={(e) => setSocialHandle(e.target.value.replace(/\s/g, ""))} />
+                                </InputGroup>
+                                
+                                <Form.Group className="mb-3">
+                                    <Form.Control type="email" placeholder="Email" value={email} required onChange={(e) => setEmail(e.target.value)} />
+                                </Form.Group>
+                                
+                                <Form.Group className="mb-3">
+                                    <Form.Control type="password" placeholder="Password" value={password} required onChange={(e) => setPassword(e.target.value)} />
+                                </Form.Group>
+                                
+                                <Button variant="dark" type="submit" className="w-100 fw-bold fs-5">Register</Button>
+                            </Form>
+                            
+                            <Card className="mt-3 text-center">
+                                <Button variant="light" href="http://localhost:3000/auth/google" className="d-flex align-items-center justify-content-center">
+                                    <FontAwesomeIcon icon={faGoogle} size="lg" className="me-2" /> Sign Up with Google
+                                </Button>
+                            </Card>
+                            
+                            <hr className="my-4" />
+                            
+                            <div className="text-center">
+                                <p className="mb-0">Have an account? <a href="/" className="fw-bold text-decoration-none">Login</a></p>
+                            </div>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
     );
 };
