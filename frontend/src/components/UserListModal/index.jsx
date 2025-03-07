@@ -13,7 +13,7 @@ export default ({ show, onHide, titleModal, datas, userId }) => {
                 <Modal.Title>{titleModal}</Modal.Title>
             </Modal.Header>
 
-            <Modal.Body>
+            <Modal.Body className="modal-list">
                 {datas.length > 0 && (
                     <div className="d-flex flex-column">
                         {datas.map((data) => (

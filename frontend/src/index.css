@@ -62,6 +62,14 @@ img.profile-header-picture {
 }
 /* End Profile Header */
 
+/* Navigation */
+.profile-navigation-picture {
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+}
+/* End Navigation */
+
 /* Cards */
 .cards-group {
     display: flex;
@@ -244,7 +252,7 @@ a.card-profile p small {
 /* End Cards */
 
 /* Modal Form */
-.modal-body {
+.modal-list {
     max-height: 60vh;
     overflow-y: auto;
 }
