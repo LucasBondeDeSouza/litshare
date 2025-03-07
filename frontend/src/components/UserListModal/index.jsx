@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
@@ -6,6 +6,12 @@ import FollowButton from "../FollowButton";
 import { Link } from "react-router-dom";
 
 export default ({ show, onHide, titleModal, datas, userId }) => {
+    const [search, setSearch] = useState("");
+
+    const filteredData = datas.filter((data) =>
+        data.username.toLowerCase().includes(search.toLowerCase()) ||
+        data.social_handle.toLowerCase().includes(search.toLowerCase())
+    );
 
     return (
         <Modal show={show} onHide={onHide}>
@@ -14,9 +20,17 @@ export default ({ show, onHide, titleModal, datas, userId }) => {
             </Modal.Header>
 
             <Modal.Body className="modal-list">
-                {datas.length > 0 && (
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="form-control mb-3"
+                />
+
+                {filteredData.length > 0 ? (
                     <div className="d-flex flex-column">
-                        {datas.map((data) => (
+                        {filteredData.map((data) => (
                             <div key={data.id} className="d-flex align-items-center justify-content-between p-2 modal-line">
                                 <div className="d-flex align-items-center gap-2">
                                     {data.picture ? (
@@ -30,7 +44,7 @@ export default ({ show, onHide, titleModal, datas, userId }) => {
                                     </Link>
                                 </div>
 
-                                {data.id != userId && (
+                                {data.id !== userId && (
                                     <FollowButton
                                         initialIsFollowing={data.isfollowing}
                                         followedId={data.id}
@@ -40,8 +54,10 @@ export default ({ show, onHide, titleModal, datas, userId }) => {
                             </div>
                         ))}
                     </div>
+                ) : (
+                    <p className="text-center">Nenhum resultado encontrado.</p>
                 )}
             </Modal.Body>
         </Modal>
-    )
-}
+    );
+};
