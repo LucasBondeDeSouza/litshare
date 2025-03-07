@@ -44,8 +44,15 @@ export default ({ social_handle, userId, setProfileId }) => {
                             )}
 
                             <div className="d-flex flex-column">
-                                <h5 className="card-title m-0">{data.username}</h5>
-                                <span className="text-muted"><small>{data.social_handle}</small></span>
+                                <h5 className="card-title m-0 d-none d-sm-block">{data.username}</h5>
+                                <h5 className="card-title m-0 d-sm-none">
+                                    {data?.username && (data.username.length > 10 ? data.username.slice(0, 10) + "..." : data.username)}
+                                </h5>
+
+                                <span className="text-muted d-none d-sm-block">{data.social_handle}</span>
+                                <span className="text-muted d-sm-none">
+                                    <small>{data?.social_handle && (data.social_handle.length > 15 ? data.social_handle.slice(0, 15) + '...' : data.social_handle)}</small>
+                                </span>
                             </div>
                         </div>
 
