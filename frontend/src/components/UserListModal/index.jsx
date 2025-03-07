@@ -39,12 +39,19 @@ export default ({ show, onHide, titleModal, datas, userId }) => {
                                         <FontAwesomeIcon icon={faUserCircle} size="2x" />
                                     )}
                                     <Link to={`/user/${data.social_handle}`} onClick={onHide} className="d-flex flex-column align-items-start text-decoration-none text-dark">
-                                        <span className="fw-bold"><small>{data.social_handle}</small></span>
-                                        <span>{data.username}</span>
+                                        <span className="fw-bold d-none d-sm-block"><small>{data.social_handle}</small></span>
+                                        <span className="fw-bold d-sm-none">
+                                            <small>{data?.social_handle && (data.social_handle.length > 15 ? data.social_handle.slice(0, 15) + '...' : data.social_handle)}</small>
+                                        </span>
+
+                                        <span className="d-none d-sm-block">{data.username}</span>
+                                        <span className="d-sm-none">
+                                            {data?.username && (data.username.length > 15 ? data.username.slice(0, 15) + '...' : data.username)}
+                                        </span>
                                     </Link>
                                 </div>
 
-                                {data.id !== userId && (
+                                {data.id != userId && (
                                     <FollowButton
                                         initialIsFollowing={data.isfollowing}
                                         followedId={data.id}
