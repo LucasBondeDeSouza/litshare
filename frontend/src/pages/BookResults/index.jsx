@@ -5,7 +5,7 @@ import axios from "axios"
 import Header from "../../components/Header";
 import Cards from "../../components/Cards";
 import BookMetrics from "../../components/BookMetrics";
-import Footer from "../../components/Footer";
+import Navigation from "../../components/Navigation";
 
 export default () => {
     const { title } = useParams();
@@ -51,7 +51,7 @@ export default () => {
                 </div>
             </div>
 
-            <Footer />
+            <Navigation />
         </>
     )
 }

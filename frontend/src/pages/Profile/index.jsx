@@ -4,7 +4,7 @@ import axios from "axios";
 import Header from "../../components/Header";
 import Cards from "../../components/Cards";
 import ProfileHeader from "../../components/ProfileHeader";
-import Footer from "../../components/Footer";
+import Navigation from "../../components/Navigation";
 
 export default () => {
     const { social_handle } = useParams(); // Obtendo o identificador do usuário pela URL
@@ -57,7 +57,7 @@ export default () => {
                 </div>
             </div>
 
-            <Footer />
+            <Navigation />
         </>
     );
 };

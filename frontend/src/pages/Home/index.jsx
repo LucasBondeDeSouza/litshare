@@ -1,7 +1,6 @@
 import React from "react";
 import Header from "../../components/Header";
 import Timeline from "../Timeline";
-import Footer from "../../components/Footer";
 import Navigation from "../../components/Navigation";
 
 export default () => {
@@ -14,7 +13,7 @@ export default () => {
                     <Timeline />
                 </div>
             </div>
-            <Footer />
+
             <Navigation />
         </>
     );
