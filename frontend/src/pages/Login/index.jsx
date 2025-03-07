@@ -6,6 +6,8 @@ import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../auth/authContext";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default () => {
     const [email, setEmail] = useState('');
@@ -26,14 +28,29 @@ export default () => {
                 login(response.data.user.id); // Usa a função de login do contexto
                 navigate('/');
             } else {
-                alert('Login failed: User ID not found');
+                toast.error('Login failed: User ID not found', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    theme: "colored",
+                })
             }
 
             setEmail('');
             setPassword('');
         } catch (err) {
-            console.log('Error login client', err);
-            alert('Login Failed');
+            toast.error('Login Failed: Invalid email or password', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "colored",
+            })
         }
     };
 
@@ -97,6 +114,8 @@ export default () => {
                     </Col>
                 </Row>
             </Container>
+
+            <ToastContainer />
         </div>
     );
 };
