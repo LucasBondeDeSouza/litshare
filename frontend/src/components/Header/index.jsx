@@ -121,8 +121,6 @@ export default () => {
                 </div>
             </Container>
 
-            <ToastContainer />
-
             {showModal && <ModalForm onClose={() => setShowModal(false)} userId={userId} />}
         </div>
     );

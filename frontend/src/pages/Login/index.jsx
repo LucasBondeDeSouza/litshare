@@ -6,7 +6,7 @@ import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../auth/authContext";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default () => {
@@ -31,11 +31,6 @@ export default () => {
                 toast.error('Login failed: User ID not found', {
                     position: "top-right",
                     autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    theme: "colored",
                 })
             }
 
@@ -45,11 +40,6 @@ export default () => {
             toast.error('Login Failed: Invalid email or password', {
                 position: "top-right",
                 autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "colored",
             })
         }
     };
@@ -114,8 +104,6 @@ export default () => {
                     </Col>
                 </Row>
             </Container>
-
-            <ToastContainer />
         </div>
     );
 };
