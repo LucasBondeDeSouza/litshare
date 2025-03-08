@@ -3,7 +3,8 @@ import axios from "axios"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Form, Modal, Button } from "react-bootstrap"
 
 export default ({ onClose, bookId, title, review, rating, getBooks }) => {
@@ -25,10 +26,12 @@ export default ({ onClose, bookId, title, review, rating, getBooks }) => {
         try {
             const bookData = { editReview, editRating }
             await axios.put(`http://localhost:3000/api/books/${bookId}`, bookData)
+            toast.success("Book successfully published!", { position: "top-right", autoClose: 3000 });
             getBooks()
             onClose()
         } catch (err) {
             console.error(err);
+            toast.error("Failed to edit book. Please try again.", { position: "top-right", autoClose: 3000 })
         }
     }
 

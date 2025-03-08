@@ -3,6 +3,8 @@ import axios from "axios";
 import { Button, Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import EditModal from "../../EditModal";
 
 export default ({ book, bookId, getBooks }) => {
@@ -11,10 +13,11 @@ export default ({ book, bookId, getBooks }) => {
     const handleDelete = async (id) => {
         try {
             await axios.delete(`http://localhost:3000/api/books/${id}`);
+            toast.success("Book deleted successfully!", { position: "top-right", autoClose: 3000 });
             getBooks()
         } catch (error) {
             console.error("Error deleting book:", error);
-            alert("There was an error deleting the book.");
+            toast.error("There was an error deleting the book.", { position: "top-right", autoClose: 3000 });
         }
     };
 

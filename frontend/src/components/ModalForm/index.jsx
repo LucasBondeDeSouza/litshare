@@ -51,7 +51,7 @@ export default ({ onClose, userId }) => {
         try {
             const bookData = { title, review, rating, userId };
             await axios.post("http://localhost:3000/api/books/newBook", bookData);
-            toast.success("Book added successfully!", { autoClose: 3000 });
+            toast.success("Book added successfully!", { position: "top-right", autoClose: 3000 });
 
             setTitle("");
             setReview("");
@@ -59,7 +59,7 @@ export default ({ onClose, userId }) => {
             onClose();
         } catch (err) {
             console.error("Error adding book:", err.response ? err.response.data : err.message)
-            toast.error("Failed to add book. Please try again.")
+            toast.error("Failed to add book. Please try again.", { position: "top-right", autoClose: 3000 })
         }
     }
 
