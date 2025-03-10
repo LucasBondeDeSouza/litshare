@@ -60,8 +60,7 @@ export const getClient = async (req, res) => {
 
 export const searchClients = async (req, res) => {
     try {
-        const search = req.query.q;
-        const clients = await clientService.searchClients(search);
+        const clients = await clientService.searchClients();
         res.status(200).json(clients);
     } catch (err) {
         console.error(err);

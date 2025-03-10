@@ -14,7 +14,7 @@ export default () => {
     const [data, setData] = useState({});
     const navigate = useNavigate();
     const searchRef = useRef(null);
-    const userId = localStorage.getItem('userId')
+    const userId = localStorage.getItem('userId');
 
     useEffect(() => {
         if (userId) {
@@ -23,7 +23,7 @@ export default () => {
             console.error('No user ID found in localStorage');
         }
     }, []);
-    
+
     const getUser = async () => {
         try {
             const response = await axios.get(`http://localhost:3000/api/clients/home/${userId}`);
@@ -34,15 +34,42 @@ export default () => {
     };
 
     const handleSearch = async (query) => {
-        if (!query.trim()) {
+        if (query.length > 2) {
+            try {
+                const [bookResponse, userResponse] = await Promise.all([
+                    axios.get(`https://openlibrary.org/search.json?title=${query}&limit=5`),
+                    axios.get(`http://localhost:3000/api/clients/search`)
+                ]);
+
+                // Formatar livros
+                const bookResults = bookResponse.data.docs.map(book => ({
+                    key: book.key,
+                    title: book.title,
+                    author_name: book.author_name || ["Autor Desconhecido"],
+                    cover_i: book.cover_i || null,
+                    type: 'book'
+                }));
+
+                // Filtrar e formatar usuários
+                const userResults = userResponse.data
+                    .filter(user => 
+                        user.username.toLowerCase().includes(query.toLowerCase()) || 
+                        user.social_handle.toLowerCase().includes(query.toLowerCase())
+                    )
+                    .map(user => ({
+                        key: user.social_handle,
+                        username: user.username,
+                        social_handle: user.social_handle,
+                        picture: user.picture,
+                        type: 'user'
+                    }));
+
+                setResults([...userResults, ...bookResults]); 
+            } catch (error) {
+                console.error("Erro ao buscar dados:", error);
+            }
+        } else {
             setResults([]);
-            return;
-        }
-        try {
-            const response = await axios.get(`http://localhost:3000/api/clients/search?q=${query}`);
-            setResults(response.data);
-        } catch (err) {
-            console.error("Error search client:", err);
         }
     };
 
@@ -69,9 +96,9 @@ export default () => {
 
     const handleLogout = async () => {
         try {
-            await axios.post('http://localhost:3000/api/clients/logout');  // Chama a rota de logout no backend
-            localStorage.removeItem('userId');  // Remove o ID do usuário armazenado no localStorage
-            navigate('/login');  // Redireciona para a página de login
+            await axios.post('http://localhost:3000/api/clients/logout');  
+            localStorage.removeItem('userId');  
+            navigate('/login');  
         } catch (err) {
             console.error("Erro ao realizar logout:", err);
         }

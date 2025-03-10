@@ -60,25 +60,12 @@ export const getClient = async (id) => {
     return rows[0];
 }
 
-export const searchClients = async (search) => {
-    const usersQuery = await query(
-        `SELECT username, social_handle, picture FROM users WHERE username ILIKE $1 OR social_handle ILIKE $1`,
-        [`%${search}%`]
-    );
-
-    // Busca livros na API Open Library
-    const booksQuery = await axios.get(`https://openlibrary.org/search.json?q=${search}`);
-
-    // Adiciona informações de livros à lista de resultados
-    const books = booksQuery.data.docs.map((book) => ({
-        title: book.title,
-        author_name: book.author_name ? book.author_name.join(", ") : "Autor desconhecido",
-        cover: book.cover_i
-            ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
-            : null,
-    }));
-
-    return [...usersQuery.rows, ...books]; // Combina usuários e livros
+export const searchClients = async () => {
+    const { rows } = await query(
+        'SELECT username, social_handle, picture FROM users'
+    )
+    
+    return rows
 };
 
 export const getUserProfile = async (social_handle, userId) => {

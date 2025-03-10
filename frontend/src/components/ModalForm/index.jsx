@@ -71,7 +71,7 @@ export default ({ onClose, userId }) => {
             onClose();
         } catch (err) {
             console.error("Erro ao adicionar livro:", err.response ? err.response.data : err.message);
-            toast.error("Failed to add book. Please try again.", { position: "top-right", autoClose: 3000 });
+            toast.error("You already have this book registered. Try Another :)", { position: "top-right", autoClose: 3000 });
         }
     };
 
