@@ -12,6 +12,7 @@ export default ({ onClose, userId }) => {
     const [title, setTitle] = useState('');
     const [review, setReview] = useState('');
     const [rating, setRating] = useState(0);
+    const [olid, setOlid] = useState('')
     const [books, setBooks] = useState([]);
     const listRef = useRef(null);
     const modalRef = useRef(null);
@@ -61,13 +62,14 @@ export default ({ onClose, userId }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const bookData = { title, review, rating, userId };
+            const bookData = { title, review, rating, olid, userId };
             await axios.post("http://localhost:3000/api/books/newBook", bookData);
             toast.success("Book added successfully!", { position: "top-right", autoClose: 3000 });
 
             setTitle("");
             setReview("");
             setRating(0);
+            setOlid("")
             onClose();
         } catch (err) {
             console.error("Erro ao adicionar livro:", err.response ? err.response.data : err.message);
@@ -75,8 +77,9 @@ export default ({ onClose, userId }) => {
         }
     };
 
-    const handleBookClick = (_, bookTitle) => {
+    const handleBookClick = (_, bookTitle, bookOlid) => {
         setTitle(bookTitle);
+        setOlid(bookOlid);
         setBooks([]);
     };
 

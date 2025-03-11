@@ -2,8 +2,8 @@ import * as bookService from "../services/bookServices.js"
 
 export const addBooks = async (req, res) => {
     try {
-        const { title, review, rating, userId } = req.body;
-        const book = await bookService.addBook(title, review, rating, userId);
+        const { title, review, rating, olid, userId } = req.body;
+        const book = await bookService.addBook(title, review, rating, olid, userId);
         res.status(201).json(book);
     } catch (err) {
         console.log('Error adding book:', err.message);

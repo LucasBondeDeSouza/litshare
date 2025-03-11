@@ -5,19 +5,29 @@ async function fetchBookData(book) {
     try {
         // Faz a busca pelo título do livro
         const searchBook = await axios.get(`https://openlibrary.org/search.json?title=${encodeURIComponent(book.title)}`);
-        const firstResult = searchBook.data.docs[0];
+        const books = searchBook.data.docs;
 
-        if (!firstResult) {
+        if (!books.length) {
             throw new Error('Book not found');
         }
 
+        // Normaliza a chave do livro para garantir correspondência
+        const bookKey = book.olid ? `/works/${book.olid}` : null;
+
+        // Filtra pelo key (olid), se disponível; caso contrário, usa o primeiro resultado
+        const filteredBook = bookKey ? books.find(b => b.key === bookKey) : books[0];
+
+        if (!filteredBook) {
+            throw new Error('Matching book not found');
+        }
+
         // Construindo a URL da capa do livro (se houver)
-        const cover = firstResult.cover_i 
-            ? `https://covers.openlibrary.org/b/id/${firstResult.cover_i}-L.jpg` 
+        const cover = filteredBook.cover_i 
+            ? `https://covers.openlibrary.org/b/id/${filteredBook.cover_i}-L.jpg` 
             : 'Cover Not Found';
 
         // Obtendo o autor (primeiro da lista, se houver)
-        const author = firstResult.author_name?.[0] || 'Author Not Found';
+        const author = filteredBook.author_name?.[0] || 'Author Not Found';
 
         return {
             ...book,
@@ -34,11 +44,11 @@ async function fetchBookData(book) {
     }
 }
 
-export const addBook = async (title, review, rating, userId) => {
+export const addBook = async (title, review, rating, olid, userId) => {
     // Verifica se o livro já existe para o usuário
     const existingBook = await query(
-        `SELECT * FROM books WHERE title = $1 AND user_id = $2`,
-        [title, userId]
+        `SELECT * FROM books WHERE olid = $1 AND user_id = $2`,
+        [olid, userId]
     );
 
     if (existingBook.rows.length > 0) {
@@ -47,9 +57,9 @@ export const addBook = async (title, review, rating, userId) => {
 
     // Insere o novo livro se não existir
     const { rows } = await query(
-        `INSERT INTO books (title, review, rating, user_id)
-        VALUES ($1, $2, $3, $4) RETURNING *`,
-        [title, review, rating, userId]
+        `INSERT INTO books (title, review, rating, olid, user_id)
+        VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+        [title, review, rating, olid, userId]
     );
 
     return rows[0];
@@ -86,7 +96,7 @@ export const editBook = async (bookId, editReview, editRating) => {
 
 export const getBooks = async (id) => {
     const { rows } = await query(
-        `SELECT u.id AS user_id, u.username, u.social_handle, u.picture, b.id AS book_id, b.title, b.review, b.rating,
+        `SELECT u.id AS user_id, u.username, u.social_handle, u.picture, b.id AS book_id, b.title, b.review, b.rating, b.olid,
             CASE WHEN l.user_id IS NOT NULL THEN TRUE ELSE FALSE END AS liked_by_user,
             COALESCE(likes_count.count, 0) AS like_count
         FROM (
@@ -124,6 +134,7 @@ export const getBookSearch = async (title, userId) => {
                 b.title, 
                 b.review, 
                 b.rating,
+                b.olid,
                 CASE 
                     WHEN l.user_id IS NOT NULL THEN TRUE 
                     ELSE FALSE 
@@ -157,6 +168,7 @@ export const getBookBySocialHandle = async (social_handle, userId) => {
                 b.title, 
                 b.review, 
                 b.rating,
+                b.olid,
                 CASE 
                     WHEN l.user_id IS NOT NULL THEN TRUE 
                     ELSE FALSE 
