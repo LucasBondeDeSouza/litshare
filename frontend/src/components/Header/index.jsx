@@ -108,12 +108,12 @@ export default () => {
         <div className="py-2 border-bottom bg-white sticky-top">
             <Container>
                 <div className="d-flex flex-wrap align-items-center justify-content-between">
-                    <a href="/" className="d-flex align-items-center mb-lg-0 link-body-emphasis text-decoration-none">
-                        <FontAwesomeIcon icon={faBook} size="2x" className="me-2" />
-                        <h1 className="display-6 mb-0 d-none d-lg-inline">LitShare</h1>
+                    <a href="/" className="d-flex align-items-center link-body-emphasis text-decoration-none gap-2">
+                        <FontAwesomeIcon icon={faBook} className="fs-3" />
+                        <h2 className="fs-4 fw-bold m-0 d-none d-lg-block">LitShare</h2>
                     </a>
 
-                    <Form ref={searchRef} className="col-10 col-lg-5 mb-lg-0 me-lg-3 position-relative">
+                    <Form ref={searchRef} className="col-11 col-lg-5 mb-lg-0 me-lg-3 position-relative">
                         <Form.Control
                             type="text"
                             placeholder="Search..."
