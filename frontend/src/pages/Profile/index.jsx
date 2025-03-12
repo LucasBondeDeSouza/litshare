@@ -35,7 +35,7 @@ export default () => {
 
     return (
         <>
-            <Header />
+            <Header getBooks={getBooks} />
             
             <div className="bg-light min-vh-100 pb-5">
                 <div className="container">
