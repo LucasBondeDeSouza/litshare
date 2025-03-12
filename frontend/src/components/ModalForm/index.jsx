@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ListGroup from "../ListGroup";
 
-export default ({ onClose, userId, social_handle, getBooks }) => {
+export default ({ onClose, userId, social_handle }) => {
     const [title, setTitle] = useState('');
     const [review, setReview] = useState('');
     const [rating, setRating] = useState(0);
@@ -74,7 +74,6 @@ export default ({ onClose, userId, social_handle, getBooks }) => {
             setOlid("")
             onClose();
 
-            getBooks()
             navigate(`/user/${social_handle}`);
         } catch (err) {
             console.error("Erro ao adicionar livro:", err.response ? err.response.data : err.message);

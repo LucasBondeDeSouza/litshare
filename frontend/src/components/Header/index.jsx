@@ -7,7 +7,7 @@ import { faBook, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import ModalForm from "../ModalForm";
 import ListGroup from "../ListGroup";
 
-export default ({ getBooks }) => {
+export default () => {
     const [search, setSearch] = useState('');
     const [results, setResults] = useState([]);
     const [showModal, setShowModal] = useState(false);
@@ -147,7 +147,7 @@ export default ({ getBooks }) => {
                 </div>
             </Container>
 
-            {showModal && <ModalForm onClose={() => setShowModal(false)} userId={userId} social_handle={data.social_handle} getBooks={getBooks} />}
+            {showModal && <ModalForm onClose={() => setShowModal(false)} userId={userId} social_handle={data.social_handle} />}
         </div>
     );
 }
