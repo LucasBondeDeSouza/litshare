@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons";
@@ -8,7 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ListGroup from "../ListGroup";
 
-export default ({ onClose, userId }) => {
+export default ({ onClose, userId, social_handle }) => {
     const [title, setTitle] = useState('');
     const [review, setReview] = useState('');
     const [rating, setRating] = useState(0);
@@ -16,6 +17,7 @@ export default ({ onClose, userId }) => {
     const [books, setBooks] = useState([]);
     const listRef = useRef(null);
     const modalRef = useRef(null);
+    const navigate = useNavigate(); // Hook para redirecionamento
 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -71,6 +73,8 @@ export default ({ onClose, userId }) => {
             setRating(0);
             setOlid("")
             onClose();
+
+            navigate(`/user/${social_handle}`);
         } catch (err) {
             console.error("Erro ao adicionar livro:", err.response ? err.response.data : err.message);
             toast.error("You already have this book registered. Try Another :)", { position: "top-right", autoClose: 3000 });
