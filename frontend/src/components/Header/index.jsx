@@ -146,8 +146,8 @@ export default () => {
                     </div>
                 </div>
             </Container>
-
-            {showModal && <ModalForm onClose={() => setShowModal(false)} userId={userId} social_handle={data.social_handle} />}
+            
+            {showModal && <ModalForm onClose={() => setShowModal(false)} userId={userId} />}
         </div>
     );
 }
