@@ -94,6 +94,36 @@ export const editBook = async (bookId, editReview, editRating) => {
     return rows[0]
 }
 
+export const getBooksForYou = async (id) => {
+    const { rows } = await query(
+        `SELECT u.id AS user_id, u.username, u.social_handle, u.picture, b.id AS book_id, b.title, b.review, b.rating, b.olid,
+            CASE WHEN l.user_id IS NOT NULL THEN TRUE ELSE FALSE END AS liked_by_user,
+            COALESCE(likes_count.count, 0) AS like_count
+        FROM (
+            SELECT * FROM books
+            WHERE user_id != $1  -- Exclui os livros do usuário logado
+            ORDER BY id DESC
+            LIMIT 52
+        ) b
+        JOIN users u ON b.user_id = u.id
+        JOIN followers f ON u.id = f.followed_id
+        LEFT JOIN likes l ON b.id = l.book_id AND l.user_id = $1
+        LEFT JOIN (
+            SELECT book_id, COUNT(*) AS count
+            FROM likes
+            GROUP BY book_id
+        ) likes_count ON b.id = likes_count.book_id
+        WHERE f.follower_id = $1
+        ORDER BY b.id DESC`,
+        [id]
+    );
+
+    // Para cada livro, busca as informações adicionais (imagem, autor e categoria)
+    const booksWithDetails = await Promise.all(rows.map(fetchBookData));
+
+    return booksWithDetails;
+};
+
 export const getBooksFollowing = async (id) => {
     const { rows } = await query(
         `SELECT u.id AS user_id, u.username, u.social_handle, u.picture, b.id AS book_id, b.title, b.review, b.rating, b.olid,

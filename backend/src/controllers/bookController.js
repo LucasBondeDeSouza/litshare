@@ -45,6 +45,17 @@ export const editBook = async (req, res) => {
     }
 }
 
+export const getBooksForYou = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const books = await bookService.getBooksForYou(id);
+        res.status(200).json(books);
+    } catch (err) {
+        console.error("Error retrieving books:", err);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
 export const getBooksFollowing = async (req, res) => {
     try {
         const { id } = req.params;
