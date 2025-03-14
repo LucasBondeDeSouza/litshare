@@ -1,5 +1,7 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
+
+import Footer from "../../components/Footer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
@@ -86,11 +88,13 @@ export default () => {
 
                                     <Button variant="dark" type="submit" className="w-100 fw-bold fs-5">Login</Button>
 
-                                    <Card className="mt-3 text-center">
-                                        <Button variant="light" href="http://localhost:3000/auth/google" className="d-flex align-items-center justify-content-center">
-                                            <FontAwesomeIcon icon={faGoogle} size="lg" className="me-2" /> Sign In with Google
-                                        </Button>
-                                    </Card>
+                                    {/* 
+                                        <Card className="mt-3 text-center">
+                                            <Button variant="light" href="http://localhost:3000/auth/google" className="d-flex align-items-center justify-content-center">
+                                                <FontAwesomeIcon icon={faGoogle} size="lg" className="me-2" /> Sign In with Google
+                                            </Button>
+                                        </Card>
+                                    */}
                                 </Form>
 
                                 <hr className="my-4" />
@@ -104,6 +108,8 @@ export default () => {
                     </Col>
                 </Row>
             </Container>
+            
+            <Footer />
         </div>
     );
 };

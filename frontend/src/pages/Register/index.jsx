@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+
+import Footer from "../../components/Footer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
@@ -49,51 +51,57 @@ export default () => {
     };
 
     return (
-        <Container fluid className="bg-light min-vh-100 d-flex justify-content-center align-items-center">
-            <Row className="justify-content-center w-100">
-                <Col xs={12} lg={6}>
-                    <Card className="shadow p-2">
-                        <Card.Body>
-                            <div className="d-flex align-items-center justify-content-center mb-3">
-                                <FontAwesomeIcon icon={faBook} size="3x" className="me-3" />
-                                <h1 className="display-6 fw-bold m-0">LitShare</h1>
-                            </div>
-                            <Form noValidate onSubmit={handleSubmit}>
-                                <Form.Group className="mb-3">
-                                    <Form.Control type="text" placeholder="Name" value={name} required onChange={(e) => setName(e.target.value)} />
-                                </Form.Group>
+        <div className="bg-light">
+            <Container className="min-vh-100 d-flex justify-content-center align-items-center">
+                <Row className="justify-content-center w-100">
+                    <Col xs={12} lg={6}>
+                        <Card className="shadow p-2">
+                            <Card.Body>
+                                <div className="d-flex align-items-center justify-content-center mb-3">
+                                    <FontAwesomeIcon icon={faBook} size="3x" className="me-3" />
+                                    <h1 className="display-6 fw-bold m-0">LitShare</h1>
+                                </div>
+                                <Form noValidate onSubmit={handleSubmit}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Control type="text" placeholder="Name" value={name} required onChange={(e) => setName(e.target.value)} />
+                                    </Form.Group>
+                                    
+                                    <InputGroup className="mb-3">
+                                        <InputGroup.Text>@</InputGroup.Text>
+                                        <Form.Control type="text" placeholder="" value={social_handle} required onChange={(e) => setSocialHandle(e.target.value.replace(/\s/g, ""))} />
+                                    </InputGroup>
+                                    
+                                    <Form.Group className="mb-3">
+                                        <Form.Control type="email" placeholder="Email" value={email} required onChange={(e) => setEmail(e.target.value)} />
+                                    </Form.Group>
+                                    
+                                    <Form.Group className="mb-3">
+                                        <Form.Control type="password" placeholder="Password" value={password} required onChange={(e) => setPassword(e.target.value)} />
+                                    </Form.Group>
+                                    
+                                    <Button variant="dark" type="submit" className="w-100 fw-bold fs-5">Register</Button>
+                                </Form>
                                 
-                                <InputGroup className="mb-3">
-                                    <InputGroup.Text>@</InputGroup.Text>
-                                    <Form.Control type="text" placeholder="" value={social_handle} required onChange={(e) => setSocialHandle(e.target.value.replace(/\s/g, ""))} />
-                                </InputGroup>
+                                {/* 
+                                    <Card className="mt-3 text-center">
+                                        <Button variant="light" href="http://localhost:3000/auth/google" className="d-flex align-items-center justify-content-center">
+                                            <FontAwesomeIcon icon={faGoogle} size="lg" className="me-2" /> Sign Up with Google
+                                        </Button>
+                                    </Card>
+                                */}
                                 
-                                <Form.Group className="mb-3">
-                                    <Form.Control type="email" placeholder="Email" value={email} required onChange={(e) => setEmail(e.target.value)} />
-                                </Form.Group>
+                                <hr className="my-4" />
                                 
-                                <Form.Group className="mb-3">
-                                    <Form.Control type="password" placeholder="Password" value={password} required onChange={(e) => setPassword(e.target.value)} />
-                                </Form.Group>
-                                
-                                <Button variant="dark" type="submit" className="w-100 fw-bold fs-5">Register</Button>
-                            </Form>
-                            
-                            <Card className="mt-3 text-center">
-                                <Button variant="light" href="http://localhost:3000/auth/google" className="d-flex align-items-center justify-content-center">
-                                    <FontAwesomeIcon icon={faGoogle} size="lg" className="me-2" /> Sign Up with Google
-                                </Button>
-                            </Card>
-                            
-                            <hr className="my-4" />
-                            
-                            <div className="text-center">
-                                <p className="mb-0">Have an account? <a href="/" className="fw-bold text-decoration-none">Login</a></p>
-                            </div>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-        </Container>
+                                <div className="text-center">
+                                    <p className="mb-0">Have an account? <a href="/" className="fw-bold text-decoration-none">Login</a></p>
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
+
+            <Footer />
+        </div>
     );
 };
