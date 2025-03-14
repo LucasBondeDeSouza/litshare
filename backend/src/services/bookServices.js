@@ -94,7 +94,7 @@ export const editBook = async (bookId, editReview, editRating) => {
     return rows[0]
 }
 
-export const getBooks = async (id) => {
+export const getBooksFollowing = async (id) => {
     const { rows } = await query(
         `SELECT u.id AS user_id, u.username, u.social_handle, u.picture, b.id AS book_id, b.title, b.review, b.rating, b.olid,
             CASE WHEN l.user_id IS NOT NULL THEN TRUE ELSE FALSE END AS liked_by_user,

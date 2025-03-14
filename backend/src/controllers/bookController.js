@@ -45,10 +45,10 @@ export const editBook = async (req, res) => {
     }
 }
 
-export const getBooks = async (req, res) => {
+export const getBooksFollowing = async (req, res) => {
     try {
         const { id } = req.params;
-        const books = await bookService.getBooks(id);
+        const books = await bookService.getBooksFollowing(id);
         res.status(200).json(books);
     } catch (err) {
         console.error("Error retrieving books:", err);
