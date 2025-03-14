@@ -30,7 +30,6 @@ export default ({ selectedTab }) => {
 
             // Atualiza os dados com a resposta da API
             setData(response.data);
-            console.log(response.data)
         } catch (err) {
             console.error('Error fetching user data:', err);
         } finally {
