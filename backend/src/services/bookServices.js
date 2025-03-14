@@ -22,8 +22,8 @@ async function fetchBookData(book) {
         }
 
         // Construindo a URL da capa do livro (se houver)
-        const cover = filteredBook.cover_i 
-            ? `https://covers.openlibrary.org/b/id/${filteredBook.cover_i}-L.jpg` 
+        const cover = filteredBook.cover_i
+            ? `https://covers.openlibrary.org/b/id/${filteredBook.cover_i}-L.jpg`
             : 'Cover Not Found';
 
         // Obtendo o autor (primeiro da lista, se houver)
@@ -106,13 +106,9 @@ export const getBooksForYou = async (id) => {
             FROM likes
             GROUP BY book_id
         ) likes_count ON b.id = likes_count.book_id
-        WHERE b.id NOT IN (
-            SELECT book_id FROM likes WHERE user_id = $1
-        )  -- Exclui livros já curtidos pelo usuário
-        ORDER BY b.rating DESC  -- Exemplo de filtro para livros mais bem avaliados
-        LIMIT 52`,
-    [id]
-    );
+        WHERE b.user_id != $1  -- Exclui os livros cadastrados pelo próprio usuário
+        ORDER BY b.id DESC`  // Ordena os livros pelo ID para retornar os mais recentes primeiro
+        , [id]);
 
     // Para cada livro, busca as informações adicionais (imagem, autor e categoria)
     const booksWithDetails = await Promise.all(rows.map(fetchBookData));
