@@ -8,7 +8,7 @@ export default ({ following_count, userId, profileId }) => {
 
     const handleShowFollowing = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/clients/${profileId}/following?userId=${userId}`);
+            const response = await axios.get(`https://litshare-server.vercel.app/api/clients/${profileId}/following?userId=${userId}`);
             setFollowing(response.data);
             setShowModal(true)
         } catch (err) {

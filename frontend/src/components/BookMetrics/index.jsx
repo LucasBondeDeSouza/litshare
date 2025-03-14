@@ -17,7 +17,7 @@ export default ({ title }) => {
 
     const getBookMetrics = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/books/metrics/${title}`);
+            const response = await axios.get(`https://litshare-server.vercel.app/api/books/metrics/${title}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching book metrics:', err);

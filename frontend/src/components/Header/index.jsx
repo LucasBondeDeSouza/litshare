@@ -26,7 +26,7 @@ export default () => {
 
     const getUser = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/clients/home/${userId}`);
+            const response = await axios.get(`https://litshare-server.vercel.app/api/clients/home/${userId}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching user data:', err);
@@ -38,7 +38,7 @@ export default () => {
             try {
                 const [bookResponse, userResponse] = await Promise.all([
                     axios.get(`https://openlibrary.org/search.json?title=${query}&limit=5`),
-                    axios.get(`http://localhost:3000/api/clients/search`)
+                    axios.get(`https://litshare-server.vercel.app/api/clients/search`)
                 ]);
 
                 // Formatar livros
@@ -96,7 +96,7 @@ export default () => {
 
     const handleLogout = async () => {
         try {
-            await axios.post('http://localhost:3000/api/clients/logout');  
+            await axios.post('https://litshare-server.vercel.app/api/clients/logout');  
             localStorage.removeItem('userId');  
             navigate('/login');  
         } catch (err) {

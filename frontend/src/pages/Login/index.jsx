@@ -21,7 +21,7 @@ export default () => {
             const clientData = { email, password };
 
             // Fazendo a requisição para o login
-            const response = await axios.post('http://localhost:3000/api/clients/login', clientData);
+            const response = await axios.post('https://litshare-server.vercel.app/api/clients/login', clientData);
 
             // Verifica se o login foi bem-sucedido e salva o ID do usuário no localStorage
             if (response.data && response.data.user && response.data.user.id) {

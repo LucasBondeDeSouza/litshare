@@ -14,7 +14,7 @@ export default ({ book, bookId, getBooks }) => {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:3000/api/books/${bookId}`);
+            await axios.delete(`https://litshare-server.vercel.app/api/books/${bookId}`);
             toast.success("Book deleted successfully!", { position: "top-right", autoClose: 3000 });
             getBooks();
         } catch (error) {

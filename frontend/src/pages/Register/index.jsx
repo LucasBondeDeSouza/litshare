@@ -26,7 +26,7 @@ export default () => {
                 password
             };
 
-            await axios.post("http://localhost:3000/api/clients/register", clientData);
+            await axios.post("https://litshare-server.vercel.app/api/clients/register", clientData);
             
             toast.success("Registration successful! Redirecting to login...", {
                 position: "top-right",

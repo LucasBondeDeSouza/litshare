@@ -23,7 +23,7 @@ export default () => {
 
     const getUser = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/clients/home/${userId}`);
+            const response = await axios.get(`https://litshare-server.vercel.app/api/clients/home/${userId}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching user data:', err);
@@ -32,7 +32,7 @@ export default () => {
 
     const handleLogout = async () => {
         try {
-            await axios.post('http://localhost:3000/api/clients/logout');  // Chama a rota de logout no backend
+            await axios.post('https://litshare-server.vercel.app/api/clients/logout');  // Chama a rota de logout no backend
             localStorage.removeItem('userId');  // Remove o ID do usuário armazenado no localStorage
             navigate('/login');  // Redireciona para a página de login
         } catch (err) {

@@ -17,7 +17,7 @@ export default ({ bookId, userId, initialLiked, initialLikeCount }) => {
         setLikeCount((prev) => (newLikeStatus ? prev + 1 : prev - 1));
 
         try {
-            await axios.post("http://localhost:3000/api/books/like", { userId, bookId });
+            await axios.post("https://litshare-server.vercel.app/api/books/like", { userId, bookId });
         } catch (error) {
             console.error("Error toggling like:", error);
             setLiked(!newLikeStatus);
@@ -27,7 +27,7 @@ export default ({ bookId, userId, initialLiked, initialLikeCount }) => {
 
     const handleShowLikers = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/books/${bookId}/likers?userId=${userId}`);
+            const response = await axios.get(`https://litshare-server.vercel.app/api/books/${bookId}/likers?userId=${userId}`);
             setLikers(response.data);
             setShowModal(true);
         } catch (error) {

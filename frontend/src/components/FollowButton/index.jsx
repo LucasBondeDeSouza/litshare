@@ -11,8 +11,8 @@ export default ({ initialIsFollowing, followedId, userId }) => {
     const handleFollowToggle = async () => {
         try {
             const endpoint = isFollowing
-                ? "http://localhost:3000/api/clients/unfollow"
-                : "http://localhost:3000/api/clients/follow";
+                ? "https://litshare-server.vercel.app/api/clients/unfollow"
+                : "https://litshare-server.vercel.app/api/clients/follow";
 
             const response = await axios.post(endpoint, {
                 followerId: userId,

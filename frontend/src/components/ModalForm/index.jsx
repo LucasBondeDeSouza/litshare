@@ -64,7 +64,7 @@ export default ({ onClose, userId }) => {
         e.preventDefault();
         try {
             const bookData = { title, review, rating, olid, userId };
-            await axios.post("http://localhost:3000/api/books/newBook", bookData);
+            await axios.post("https://litshare-server.vercel.app/api/books/newBook", bookData);
             toast.success("Book added successfully!", { position: "top-right", autoClose: 3000 });
 
             setTitle("");

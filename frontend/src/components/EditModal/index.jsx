@@ -25,7 +25,7 @@ export default ({ onClose, bookId, title, review, rating, getBooks }) => {
         e.preventDefault();
         try {
             const bookData = { editReview, editRating }
-            await axios.put(`http://localhost:3000/api/books/${bookId}`, bookData)
+            await axios.put(`https://litshare-server.vercel.app/api/books/${bookId}`, bookData)
             toast.success("Book successfully published!", { position: "top-right", autoClose: 3000 });
             getBooks()
             onClose()

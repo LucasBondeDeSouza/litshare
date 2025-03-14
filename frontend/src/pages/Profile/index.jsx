@@ -24,7 +24,7 @@ export default () => {
     const getBooks = async () => {
         try {
             setIsLoading(true);
-            const response = await axios.get(`http://localhost:3000/api/books/${social_handle}?userId=${userId}`);
+            const response = await axios.get(`https://litshare-server.vercel.app/api/books/${social_handle}?userId=${userId}`);
             setData(response.data);
         } catch (err) {
             console.error('Error fetching user data:', err);
