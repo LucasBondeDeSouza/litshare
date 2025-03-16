@@ -54,11 +54,11 @@ export const loginClient = async (email, password) => {
 
 export const getClient = async (id) => {
     const { rows } = await query(
-        `SELECT * FROM users WHERE id = $1`,
+        `SELECT id, username, social_handle, email, picture FROM users WHERE id = $1`,
         [id]
-    )
+    );
     return rows[0];
-}
+};
 
 export const searchClients = async () => {
     const { rows } = await query(
