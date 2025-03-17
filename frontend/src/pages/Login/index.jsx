@@ -10,15 +10,18 @@ import { AuthContext } from "../../auth/authContext";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Spinner from "../../components/Spinner";
 
 export default () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         try {
             const clientData = { email, password };
 
@@ -43,6 +46,8 @@ export default () => {
                 position: "top-right",
                 autoClose: 3000,
             })
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -86,7 +91,10 @@ export default () => {
                                         />
                                     </Form.Group>
 
-                                    <Button variant="dark" type="submit" className="w-100 fw-bold fs-5">Login</Button>
+                                    <Button variant="dark" type="submit" className="w-100 fw-bold fs-5 d-flex align-items-center justify-content-center gap-2" disabled={loading}>
+                                        <Spinner loading={loading} />
+                                        Login
+                                    </Button>
 
                                     {/* 
                                         <Card className="mt-3 text-center">

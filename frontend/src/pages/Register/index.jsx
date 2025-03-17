@@ -6,6 +6,8 @@ import { faBook } from "@fortawesome/free-solid-svg-icons";
 import { Container, Row, Col, Card, Form, Button, InputGroup } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import Spinner from "../../components/Spinner";
 import Footer from "../../components/Footer";
 
 export default () => {
@@ -125,8 +127,8 @@ export default () => {
                                         <Form.Control.Feedback type="invalid">Password must be at least 6 characters long.</Form.Control.Feedback>
                                     </Form.Group>
                                     
-                                    <Button variant="dark" type="submit" className="w-100 fw-bold fs-5" disabled={loading}>
-                                        {loading ? "Registering..." : "Register"}
+                                    <Button variant="dark" type="submit" className="w-100 fw-bold fs-5 d-flex align-items-center justify-content-center gap-2" disabled={loading}>
+                                        <Spinner loading={loading} /> Register
                                     </Button>
                                 </Form>
                                 
