@@ -4,7 +4,10 @@ import axios from "axios";
 async function fetchBookData(book) {
     try {
         // Faz a busca pelo título do livro
-        const searchBook = await axios.get(`https://openlibrary.org/search.json?title=${encodeURIComponent(book.title)}`);
+        const searchBook = await axios.get(`https://openlibrary.org/search.json?title=${encodeURIComponent(book.title)}`, {
+            timeout: 5000
+        });
+
         const books = searchBook.data.docs;
 
         if (!books.length) {
