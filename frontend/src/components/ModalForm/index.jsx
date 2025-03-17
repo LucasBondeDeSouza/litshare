@@ -8,22 +8,24 @@ import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ListGroup from "../ListGroup";
+import Spinner from "../Spinner";
 
 export default ({ onClose, userId }) => {
     const [title, setTitle] = useState('');
     const [review, setReview] = useState('');
     const [rating, setRating] = useState(0);
     const [olid, setOlid] = useState('')
+    const [loading, setLoading] = useState(false);
     const [books, setBooks] = useState([]);
     const listRef = useRef(null);
     const modalRef = useRef(null);
-    
+
     useEffect(() => {
         const fetchBooks = async () => {
             if (title.length > 2) { // Só busca quando o usuário digitar pelo menos 3 caracteres
                 try {
                     const response = await axios.get(`https://openlibrary.org/search.json?title=${title}&limit=5`);
-                    
+
                     // Formata os dados antes de armazená-los
                     const bookResults = response.data.docs.map(book => ({
                         key: book.key,
@@ -62,6 +64,8 @@ export default ({ onClose, userId }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
+
         try {
             const bookData = { title, review, rating, olid, userId };
             await axios.post("https://litshare-server.vercel.app/api/books/newBook", bookData);
@@ -75,6 +79,8 @@ export default ({ onClose, userId }) => {
         } catch (err) {
             console.error("Erro ao adicionar livro:", err.response ? err.response.data : err.message);
             toast.error("You already have this book registered. Try Another :)", { position: "top-right", autoClose: 3000 });
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -105,11 +111,11 @@ export default ({ onClose, userId }) => {
                     {/* Campo de busca e lista de sugestões */}
                     <Form.Group className="mb-3" style={{ position: "relative" }}>
                         <Form.Label>Title</Form.Label>
-                        <Form.Control 
-                            type="text" 
-                            placeholder="Enter book title" 
-                            value={title} 
-                            required 
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter book title"
+                            value={title}
+                            required
                             onChange={(e) => setTitle(e.target.value)}
                         />
 
@@ -122,11 +128,12 @@ export default ({ onClose, userId }) => {
                     {/* Campo de avaliação */}
                     <Form.Group className="mb-3">
                         <Form.Label>Review</Form.Label>
-                        <Form.Control 
-                            as="textarea" 
-                            placeholder="Write your review" 
-                            value={review} 
-                            required 
+                        <Form.Control
+                            as="textarea"
+                            rows={5}
+                            placeholder="Write your review"
+                            value={review}
+                            required
                             onChange={(e) => setReview(e.target.value)}
                         />
                     </Form.Group>
@@ -134,17 +141,18 @@ export default ({ onClose, userId }) => {
                     {/* Seletor de estrelas */}
                     <Form.Group className="mb-3">
                         <Form.Label>Rating</Form.Label>
-                        <Form.Range 
-                            value={rating} 
-                            min={0} 
-                            max={5} 
-                            step={1} 
-                            onChange={(e) => setRating(Number(e.target.value))} 
+                        <Form.Range
+                            value={rating}
+                            min={0}
+                            max={5}
+                            step={1}
+                            onChange={(e) => setRating(Number(e.target.value))}
                         />
                         {renderStars(rating)}
                     </Form.Group>
 
-                    <Button type="submit" className="btn btn-dark w-100 fw-bold fs-5">
+                    <Button variant="dark" type="submit" className="w-100 fw-bold fs-5 d-flex align-items-center justify-content-center gap-2" disabled={loading}>
+                        <Spinner loading={loading} />
                         Add
                     </Button>
                 </Form>

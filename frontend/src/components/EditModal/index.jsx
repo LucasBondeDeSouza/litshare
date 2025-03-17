@@ -6,10 +6,12 @@ import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Form, Modal, Button } from "react-bootstrap"
+import Spinner from "../Spinner";
 
 export default ({ onClose, bookId, title, review, rating, getBooks }) => {
     const [editReview, setEditReview] = useState(review)
     const [editRating, setEditRating] = useState(rating)
+    const [loading, setLoading] = useState(false);
 
     const renderStars = (rating) => {
         return (
@@ -23,6 +25,7 @@ export default ({ onClose, bookId, title, review, rating, getBooks }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         try {
             const bookData = { editReview, editRating }
             await axios.put(`https://litshare-server.vercel.app/api/books/${bookId}`, bookData)
@@ -32,6 +35,8 @@ export default ({ onClose, bookId, title, review, rating, getBooks }) => {
         } catch (err) {
             console.error(err);
             toast.error("Failed to edit book. Please try again.", { position: "top-right", autoClose: 3000 })
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -50,7 +55,7 @@ export default ({ onClose, bookId, title, review, rating, getBooks }) => {
 
                     <Form.Group className="mb-3">
                         <Form.Label>Review</Form.Label>
-                        <Form.Control as="textarea" placeholder="Write your review" value={editReview} onChange={(e) => setEditReview(e.target.value)} required />
+                        <Form.Control as="textarea" rows={5} placeholder="Write your review" value={editReview} onChange={(e) => setEditReview(e.target.value)} required />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
@@ -59,7 +64,10 @@ export default ({ onClose, bookId, title, review, rating, getBooks }) => {
                         {renderStars(editRating)}
                     </Form.Group>
 
-                    <Button type="submit" className="btn btn-dark w-100 fw-bold fs-5">Edit</Button>
+                    <Button variant="dark" type="submit" className="w-100 fw-bold fs-5 d-flex align-items-center justify-content-center gap-2" disabled={loading}>
+                        <Spinner loading={loading} />
+                        Edit
+                    </Button>
                 </Form>
             </Modal.Body>
         </Modal>
