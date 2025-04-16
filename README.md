@@ -37,20 +37,19 @@ LitShare é uma plataforma social para leitores onde os usuários podem comparti
 
 ```bash
 git clone https://github.com/LucasBondeDeSouza/litshare
-cd litshare```
+cd litshare
+```bash
 
 ### 2. Configure o backend
 
-```bash
 cd backend
 npm install
 cp .env.example .env
 # Edite o .env com suas configurações
-node src/index.js```
+node src/index.js
 
 ### 3. Configure o frontend
 
-```bash
 cd frontend
 npm install
-npm run dev```
+npm run dev
