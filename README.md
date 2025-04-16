@@ -41,6 +41,7 @@ cd litshare
 
 ### 2. Configure o backend
 
+```bash
 cd backend
 npm install
 cp .env.example .env
@@ -49,6 +50,7 @@ node src/index.js
 
 ### 3. Configure o frontend
 
+```bash
 cd frontend
 npm install
 npm run dev
