@@ -4,7 +4,7 @@ LitShare é uma plataforma social para leitores onde os usuários podem comparti
 
 ## 🖼️ Preview
 
-![LitShare Screenshot](./preview.png) <!-- Adicione um print da sua aplicação aqui, ou remova esta seção se preferir -->
+![LitShare Screenshot](./preview.png)
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -18,7 +18,6 @@ LitShare é uma plataforma social para leitores onde os usuários podem comparti
 - **Node.js** + **Express**
 - **PostgreSQL**
 - **Passport.js** (Autenticação)
-- **Nodemailer** (Notificações por e-mail)
 - **OpenLibrary API** (Busca de livros)
 
 ## ✨ Funcionalidades
@@ -31,3 +30,21 @@ LitShare é uma plataforma social para leitores onde os usuários podem comparti
 - 🔔 Receber notificações por e-mail ao ganhar um novo seguidor
 - 💬 Interface dinâmica com React para uma experiência fluida
 - 📈 Modais dinâmicos com seguidores, curtidas e interações sociais
+
+## 📦 Instalação e Execução
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/LucasBondeDeSouza/litshare
+cd litshare
+
+cd backend
+npm install
+cp .env.example .env
+# Edite o .env com suas configurações
+node src/index.js
+
+cd frontend
+npm install
+npm run dev
