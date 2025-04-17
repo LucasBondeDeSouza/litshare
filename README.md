@@ -27,7 +27,6 @@ LitShare é uma plataforma social para leitores onde os usuários podem comparti
 - 📚 Adicionar livros à estante pessoal
 - ❤️ Curtir livros de outros usuários
 - 👥 Seguir e deixar de seguir usuários
-- 🔔 Receber notificações por e-mail ao ganhar um novo seguidor
 - 💬 Interface dinâmica com React para uma experiência fluida
 - 📈 Modais dinâmicos com seguidores, curtidas e interações sociais
 
@@ -38,7 +37,6 @@ LitShare é uma plataforma social para leitores onde os usuários podem comparti
 ```bash
 git clone https://github.com/LucasBondeDeSouza/litshare
 cd litshare
-```bash
 
 ### 2. Configure o backend
 
