@@ -17,7 +17,6 @@ LitShare é uma plataforma social para leitores onde os usuários podem comparti
 ### Backend
 - **Node.js** + **Express**
 - **PostgreSQL**
-- **Passport.js** (Autenticação)
 - **OpenLibrary API** (Busca de livros)
 
 ## ✨ Funcionalidades
