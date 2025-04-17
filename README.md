@@ -36,6 +36,7 @@ LitShare é uma plataforma social para leitores onde os usuários podem comparti
 ```bash
 git clone https://github.com/LucasBondeDeSouza/litshare
 cd litshare
+```
 
 ### 2. Configure o backend
 
