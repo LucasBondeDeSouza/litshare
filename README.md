@@ -30,5 +30,5 @@
 cd backend
 npm install
 npm run dev
-http://localhost:3000
 ```
+*A API estará disponível em: http://localhost:3000*
