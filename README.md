@@ -31,4 +31,4 @@ cd backend
 npm install
 npm run dev
 ```
-*A API estará disponível em: http://localhost:3000*
+*A API estará disponível em: litshare-server.vercel.app*
